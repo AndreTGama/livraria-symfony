@@ -3,7 +3,6 @@
 namespace App\Tests\Controller;
 
 use App\Entity\Assunto;
-use App\Repository\AssuntoRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
@@ -37,9 +36,6 @@ final class AssuntoControllerTest extends WebTestCase
 
         self::assertResponseStatusCodeSame(200);
         self::assertPageTitleContains('Assunto index');
-
-        // Use the $crawler to perform additional assertions e.g.
-        // self::assertSame('Some text on the page', $crawler->filter('.p')->first()->text());
     }
 
     public function testNew(): void
@@ -50,21 +46,17 @@ final class AssuntoControllerTest extends WebTestCase
 
         $this->client->submitForm('Save', [
             'assunto[descricao]' => 'Testing',
-            'assunto[livros]' => 'Testing',
         ]);
 
         self::assertResponseRedirects('/assunto');
 
         self::assertSame(1, $this->assuntoRepository->count([]));
-
-        $this->markTestIncomplete('This test was generated');
     }
 
     public function testShow(): void
     {
         $fixture = new Assunto();
         $fixture->setDescricao('My Title');
-        $fixture->setLivros('My Title');
 
         $this->manager->persist($fixture);
         $this->manager->flush();
@@ -73,16 +65,12 @@ final class AssuntoControllerTest extends WebTestCase
 
         self::assertResponseStatusCodeSame(200);
         self::assertPageTitleContains('Assunto');
-
-        // Use assertions to check that the properties are properly displayed.
-        $this->markTestIncomplete('This test was generated');
     }
 
     public function testEdit(): void
     {
         $fixture = new Assunto();
         $fixture->setDescricao('Value');
-        $fixture->setLivros('Value');
 
         $this->manager->persist($fixture);
         $this->manager->flush();
@@ -91,7 +79,6 @@ final class AssuntoControllerTest extends WebTestCase
 
         $this->client->submitForm('Update', [
             'assunto[descricao]' => 'Something New',
-            'assunto[livros]' => 'Something New',
         ]);
 
         self::assertResponseRedirects('/assunto');
@@ -99,16 +86,12 @@ final class AssuntoControllerTest extends WebTestCase
         $fixture = $this->assuntoRepository->findAll();
 
         self::assertSame('Something New', $fixture[0]->getDescricao());
-        self::assertSame('Something New', $fixture[0]->getLivros());
-
-        $this->markTestIncomplete('This test was generated');
     }
 
     public function testRemove(): void
     {
         $fixture = new Assunto();
         $fixture->setDescricao('Value');
-        $fixture->setLivros('Value');
 
         $this->manager->persist($fixture);
         $this->manager->flush();
@@ -118,7 +101,5 @@ final class AssuntoControllerTest extends WebTestCase
 
         self::assertResponseRedirects('/assunto');
         self::assertSame(0, $this->assuntoRepository->count([]));
-
-        $this->markTestIncomplete('This test was generated');
     }
 }

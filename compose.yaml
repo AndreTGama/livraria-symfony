@@ -6,7 +6,7 @@ services:
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE:-livraria}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD:-root}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD:-root}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
       MYSQL_USER: ${MYSQL_USER:-root}
     ports:
     ###> Port changed to 3307 to avoid conflict with local MySQL installation
