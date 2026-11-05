@@ -4,16 +4,16 @@ namespace App\Entity;
 
 use App\Entity\Trait\SoftDeleteableTrait;
 use App\Entity\Trait\TimestampableTrait;
-use App\Repository\AutorRepository;
+use App\Repository\AuthorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Table(name: 'Autor')]
-#[ORM\Entity(repositoryClass: AutorRepository::class)]
+#[ORM\Entity(repositoryClass: AuthorRepository::class)]
 #[Gedmo\SoftDeleteable(fieldName: 'deletedAt')]
-class Autor
+class Author
 {
     // Timestamp e Softdelete criado para implementar a rastreabilidadem desse modo podemos ver quando a informação foi criada, editada e deletada
     use TimestampableTrait, SoftDeleteableTrait;
@@ -24,17 +24,17 @@ class Autor
     private ?int $id = null;
 
     #[ORM\Column(name: 'Nome', length: 40)]
-    private ?string $nome = null;
+    private ?string $name = null;
 
     /**
-     * @var Collection<int, Livro>
+     * @var Collection<int, Book>
      */
-    #[ORM\ManyToMany(targetEntity: Livro::class, mappedBy: 'autores')]
-    private Collection $livros;
+    #[ORM\ManyToMany(targetEntity: Book::class, mappedBy: 'authors')]
+    private Collection $books;
 
     public function __construct()
     {
-        $this->livros = new ArrayCollection();
+        $this->books = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -42,42 +42,47 @@ class Autor
         return $this->id;
     }
 
-    public function getNome(): ?string
+    public function getName(): ?string
     {
-        return $this->nome;
+        return $this->name;
     }
 
-    public function setNome(string $nome): static
+    public function setName(string $name): static
     {
-        $this->nome = $nome;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Livro>
+     * @return Collection<int, Book>
      */
-    public function getLivros(): Collection
+    public function getBooks(): Collection
     {
-        return $this->livros;
+        return $this->books;
     }
 
-    public function addLivro(Livro $livro): static
+    public function addLivro(Book $book): static
     {
-        if (!$this->livros->contains($livro)) {
-            $this->livros->add($livro);
-            $livro->addAutor($this);
+        if (!$this->books->contains($book)) {
+            $this->books->add($book);
+            $book->addAutor($this);
         }
 
         return $this;
     }
 
-    public function removeLivro(Livro $livro): static
+    public function removeLivro(Book $book): static
     {
-        if ($this->livros->removeElement($livro)) {
-            $livro->removeAutor($this);
+        if ($this->books->removeElement($book)) {
+            $book->removeAutor($this);
         }
 
         return $this;
+    }
+
+    public function hasBooks(): bool
+    {
+        return !$this->getBooks()->isEmpty();
     }
 }

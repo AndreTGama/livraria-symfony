@@ -17,16 +17,16 @@
             </tr>
         </thead>
         <tbody>
-        {% for autor in autors %}
+        {% for author in authors %}
             <tr>
-                <td>{{ autor.id }}</td>
-                <td>{{ autor.nome }}</td>
-                <td>{{ autor.createdAt ? autor.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ autor.updatedAt ? autor.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ autor.deletedAt ? autor.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ author.id }}</td>
+                <td>{{ author.name }}</td>
+                <td>{{ author.createdAt ? author.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ author.updatedAt ? author.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ author.deletedAt ? author.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_autor_show', {'id': autor.id}) }}">show</a>
-                    <a href="{{ path('app_autor_edit', {'id': autor.id}) }}">edit</a>
+                    <a href="{{ path('app_author_show', {'id': author.id}) }}">show</a>
+                    <a href="{{ path('app_author_edit', {'id': author.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -37,5 +37,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_autor_new') }}">Create new</a>
+    <a href="{{ path('app_author_new') }}">Create new</a>
 {% endblock %}

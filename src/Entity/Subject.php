@@ -4,16 +4,16 @@ namespace App\Entity;
 
 use App\Entity\Trait\SoftDeleteableTrait;
 use App\Entity\Trait\TimestampableTrait;
-use App\Repository\AssuntoRepository;
+use App\Repository\SubjectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Table(name: 'Assunto')]
-#[ORM\Entity(repositoryClass: AssuntoRepository::class)]
+#[ORM\Entity(repositoryClass: SubjectRepository::class)]
 #[Gedmo\SoftDeleteable(fieldName: 'deletedAt')]
-class Assunto
+class Subject
 {
     // Timestamp e Softdelete criado para implementar a rastreabilidadem desse modo podemos ver quando a informação foi criada, editada e deletada
     use TimestampableTrait, SoftDeleteableTrait;
@@ -24,17 +24,17 @@ class Assunto
     private ?int $id = null;
 
     #[ORM\Column(name: 'Descricao', length: 20)]
-    private ?string $descricao = null;
+    private ?string $description = null;
 
     /**
-     * @var Collection<int, Livro>
+     * @var Collection<int, Book>
      */
-    #[ORM\ManyToMany(targetEntity: Livro::class, mappedBy: 'assuntos')]
-    private Collection $livros;
+    #[ORM\ManyToMany(targetEntity: Book::class, mappedBy: 'assuntos')]
+    private Collection $books;
 
     public function __construct()
     {
-        $this->livros = new ArrayCollection();
+        $this->books = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -42,40 +42,40 @@ class Assunto
         return $this->id;
     }
 
-    public function getDescricao(): ?string
+    public function getDescription(): ?string
     {
-        return $this->descricao;
+        return $this->description;
     }
 
-    public function setDescricao(string $descricao): static
+    public function setDescription(string $description): static
     {
-        $this->descricao = $descricao;
+        $this->description = $description;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Livro>
+     * @return Collection<int, Book>
      */
-    public function getLivros(): Collection
+    public function getBooks(): Collection
     {
-        return $this->livros;
+        return $this->books;
     }
 
-    public function addLivro(Livro $livro): static
+    public function addLivro(Book $book): static
     {
-        if (!$this->livros->contains($livro)) {
-            $this->livros->add($livro);
-            $livro->addAssunto($this);
+        if (!$this->books->contains($book)) {
+            $this->books->add($book);
+            $book->addAssunto($this);
         }
 
         return $this;
     }
 
-    public function removeLivro(Livro $livro): static
+    public function removeLivro(Book $book): static
     {
-        if ($this->livros->removeElement($livro)) {
-            $livro->removeAssunto($this);
+        if ($this->books->removeElement($book)) {
+            $book->removeAssunto($this);
         }
 
         return $this;

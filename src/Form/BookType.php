@@ -2,15 +2,15 @@
 
 namespace App\Form;
 
-use App\Entity\Assunto;
-use App\Entity\Autor;
-use App\Entity\Livro;
+use App\Entity\Author;
+use App\Entity\Book;
+use App\Entity\Subject;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class LivroType extends AbstractType
+class BookType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -21,12 +21,12 @@ class LivroType extends AbstractType
             ->add('anoPublicacao')
             ->add('valor')
             ->add('autores', EntityType::class, [
-                'class' => Autor::class,
+                'class' => Author::class,
                 'choice_label' => 'nome',
                 'multiple' => true,
             ])
             ->add('assuntos', EntityType::class, [
-                'class' => Assunto::class,
+                'class' => Subject::class,
                 'choice_label' => 'descricao',
                 'multiple' => true,
             ])
@@ -36,7 +36,7 @@ class LivroType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Livro::class,
+            'data_class' => Book::class,
         ]);
     }
 }

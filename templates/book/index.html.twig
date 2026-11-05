@@ -21,20 +21,20 @@
             </tr>
         </thead>
         <tbody>
-        {% for livro in livros %}
+        {% for book in books %}
             <tr>
-                <td>{{ livro.id }}</td>
-                <td>{{ livro.titulo }}</td>
-                <td>{{ livro.editora }}</td>
-                <td>{{ livro.edicao }}</td>
-                <td>{{ livro.anoPublicacao }}</td>
-                <td>{{ livro.valor }}</td>
-                <td>{{ livro.createdAt ? livro.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ livro.updatedAt ? livro.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ livro.deletedAt ? livro.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ book.id }}</td>
+                <td>{{ book.title }}</td>
+                <td>{{ book.editora }}</td>
+                <td>{{ book.edicao }}</td>
+                <td>{{ book.anoPublicacao }}</td>
+                <td>{{ book.valor }}</td>
+                <td>{{ book.createdAt ? book.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ book.updatedAt ? book.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ book.deletedAt ? book.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_livro_show', {'id': livro.id}) }}">show</a>
-                    <a href="{{ path('app_livro_edit', {'id': livro.id}) }}">edit</a>
+                    <a href="{{ path('app_book_show', {'id': book.id}) }}">show</a>
+                    <a href="{{ path('app_book_edit', {'id': book.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -45,5 +45,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_livro_new') }}">Create new</a>
+    <a href="{{ path('app_book_new') }}">Create new</a>
 {% endblock %}

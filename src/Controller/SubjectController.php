@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Assunto;
 use App\Form\AssuntoType;
 use App\Repository\AssuntoRepository;
+use App\Repository\SubjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,10 +13,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/assunto')]
-final class AssuntoController extends AbstractController
+final class SubjectController extends AbstractController
 {
     #[Route(name: 'app_assunto_index', methods: ['GET'])]
-    public function index(AssuntoRepository $assuntoRepository): Response
+    public function index(SubjectRepository $assuntoRepository): Response
     {
         return $this->render('assunto/index.html.twig', [
             'assuntos' => $assuntoRepository->findAll(),
