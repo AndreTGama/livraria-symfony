@@ -2,27 +2,27 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\Assunto;
+use App\Entity\Subject;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-final class AssuntoControllerTest extends WebTestCase
+final class SubjectControllerTest extends WebTestCase
 {
     private KernelBrowser $client;
     private EntityManagerInterface $manager;
-    /** @var EntityRepository<Assunto> $assuntoRepository */
-    private EntityRepository $assuntoRepository;
-    private string $path = '/assunto/';
+    /** @var EntityRepository<Subject> $subjectRepository */
+    private EntityRepository $subjectRepository;
+    private string $path = '/subject/';
 
     protected function setUp(): void
     {
         $this->client = static::createClient();
         $this->manager = static::getContainer()->get('doctrine')->getManager();
-        $this->assuntoRepository = $this->manager->getRepository(Assunto::class);
+        $this->subjectRepository = $this->manager->getRepository(Subject::class);
 
-        foreach ($this->assuntoRepository->findAll() as $object) {
+        foreach ($this->subjectRepository->findAll() as $object) {
             $this->manager->remove($object);
         }
 
@@ -35,7 +35,7 @@ final class AssuntoControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', $this->path);
 
         self::assertResponseStatusCodeSame(200);
-        self::assertPageTitleContains('Assunto index');
+        self::assertPageTitleContains('Subject index');
     }
 
     public function testNew(): void
@@ -45,18 +45,18 @@ final class AssuntoControllerTest extends WebTestCase
         self::assertResponseStatusCodeSame(200);
 
         $this->client->submitForm('Save', [
-            'assunto[descricao]' => 'Testing',
+            'subject[description]' => 'Testing',
         ]);
 
-        self::assertResponseRedirects('/assunto');
+        self::assertResponseRedirects('/subject');
 
-        self::assertSame(1, $this->assuntoRepository->count([]));
+        self::assertSame(1, $this->subjectRepository->count([]));
     }
 
     public function testShow(): void
     {
-        $fixture = new Assunto();
-        $fixture->setDescricao('My Title');
+        $fixture = new Subject();
+        $fixture->setDescription('My Title');
 
         $this->manager->persist($fixture);
         $this->manager->flush();
@@ -64,13 +64,13 @@ final class AssuntoControllerTest extends WebTestCase
         $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getId()));
 
         self::assertResponseStatusCodeSame(200);
-        self::assertPageTitleContains('Assunto');
+        self::assertPageTitleContains('Subject');
     }
 
     public function testEdit(): void
     {
-        $fixture = new Assunto();
-        $fixture->setDescricao('Value');
+        $fixture = new Subject();
+        $fixture->setDescription('Value');
 
         $this->manager->persist($fixture);
         $this->manager->flush();
@@ -78,20 +78,20 @@ final class AssuntoControllerTest extends WebTestCase
         $this->client->request('GET', sprintf('%s%s/edit', $this->path, $fixture->getId()));
 
         $this->client->submitForm('Update', [
-            'assunto[descricao]' => 'Something New',
+            'subject[description]' => 'Something New',
         ]);
 
-        self::assertResponseRedirects('/assunto');
+        self::assertResponseRedirects('/subject');
 
-        $fixture = $this->assuntoRepository->findAll();
+        $fixture = $this->subjectRepository->findAll();
 
-        self::assertSame('Something New', $fixture[0]->getDescricao());
+        self::assertSame('Something New', $fixture[0]->getDescription());
     }
 
     public function testRemove(): void
     {
-        $fixture = new Assunto();
-        $fixture->setDescricao('Value');
+        $fixture = new Subject();
+        $fixture->setDescription('Value');
 
         $this->manager->persist($fixture);
         $this->manager->flush();
@@ -99,7 +99,7 @@ final class AssuntoControllerTest extends WebTestCase
         $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getId()));
         $this->client->submitForm('Delete');
 
-        self::assertResponseRedirects('/assunto');
-        self::assertSame(0, $this->assuntoRepository->count([]));
+        self::assertResponseRedirects('/subject');
+        self::assertSame(0, $this->subjectRepository->count([]));
     }
 }
