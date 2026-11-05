@@ -24,7 +24,7 @@ class BookRepository extends ServiceEntityRepository
      *
      * @return array{books: list<Book>, total: int, page: int, totalPages: int}
      */
-    public function findForCatalog(array $subjectIds, array $authorIds, ?string $search, int $page, int $limit = 1): array
+    public function findForCatalog(array $subjectIds, array $authorIds, ?string $search, int $page, int $limit = 15): array
     {
         $queryBuilder = $this->createQueryBuilder('book')
             ->leftJoin('book.subjects', 'subject')

@@ -2,7 +2,7 @@
     <h3>Filtrar livros</h3>
 
     <div class="mb-3">
-        <label for="catalog-search" class="form-label">Título ou editora</label>
+        <label for="catalog-search" class="form-label"><b>Título ou editora</b></label>
         <input
             id="catalog-search"
             name="q"
@@ -14,7 +14,7 @@
     </div>
 
     <div class="mb-3">
-        <label class="form-label d-block">Assuntos</label>
+        <label class="form-label d-block"><b>Assuntos</b></label>
         {% for item in subjects %}
             <div class="form-check">
                 <input
@@ -35,7 +35,7 @@
     </div>
 
     <div class="mb-3">
-        <label class="form-label d-block">Autores</label>
+        <label class="form-label d-block"><b>Autores</b></label>
         {% for author in authors %}
             <div class="form-check">
                 <input
