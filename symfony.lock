@@ -283,6 +283,9 @@
             "./templates/base.html.twig"
         ]
     },
+    "symfony/ux-pagination": {
+        "version": "v3.7.0"
+    },
     "symfony/ux-turbo": {
         "version": "3.7",
         "recipe": {

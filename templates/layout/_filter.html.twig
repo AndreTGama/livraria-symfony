@@ -35,18 +35,25 @@
     </div>
 
     <div class="mb-3">
-        <label for="catalog-authors" class="form-label">Autores</label>
-        <select id="catalog-authors" name="authors[]" class="form-select" multiple size="5">
-            {% for author in authors %}
-                <option value="{{ author.id }}" {{ author.id in selectedAuthorIds ? 'selected' }}>
+        <label class="form-label d-block">Autores</label>
+        {% for author in authors %}
+            <div class="form-check">
+                <input
+                    type="checkbox"
+                    class="form-check-input"
+                    name="authors[]"
+                    id="author-{{ author.id }}"
+                    value="{{ author.id }}"
+                    {{ author.id in selectedAuthorIds ? 'checked' : '' }}
+                />
+                <label class="form-check-label" for="author-{{ author.id }}">
                     {{ author.name }}
-                </option>
-            {% else %}
-                <option disabled>Nenhum autor cadastrado</option>
-            {% endfor %}
-        </select>
+                </label>
+            </div>
+        {% else %}
+            <p class="text-muted small mb-0">Nenhum autor cadastrado.</p>
+        {% endfor %}
     </div>
-
-    <button type="submit" class="btn btn-primary w-100">Aplicar filtros</button>
-    <a href="{{ path('app_home') }}" class="btn btn-outline-secondary w-100 mt-2">Limpar filtros</a>
+    <custom-button type="submit">Filtrar</custom-button>
+    <custom-button href="{{ path('app_home') }}" variant="outline" class="mt-2">Limpar filtros</custom-button>
 </form>

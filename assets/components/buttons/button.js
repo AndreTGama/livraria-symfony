@@ -1,11 +1,18 @@
-const template = document.createElement('template');
+const template = document.createElement("template");
 template.innerHTML = `
 <style>
-    .btn-grad {
-        background-image: linear-gradient(to right, var(--blue-color) 0%, var(--purple-color) 51%, var(--dark-purple-color) 100%);
+    :host {
+        display: inline-block;
+    }
+
+    :host([variant="outline"]) .btn-grad {
+        background: transparent;
+        color: var(--purple-color);
+        border: 2px solid var(--purple-color);
     }
 
     .btn-grad {
+        background-image: linear-gradient(to right, var(--blue-color) 0%, var(--purple-color) 51%, var(--dark-purple-color) 100%);
         padding: 15px 45px;
         text-align: center;
         transition: 0.5s;
@@ -14,7 +21,6 @@ template.innerHTML = `
         box-shadow: 0 0 20px #eee;
         border-radius: 10px;
         display: block;
-        outline: none;
         border: none;
         width: 200px;
         text-decoration: none;
@@ -25,33 +31,75 @@ template.innerHTML = `
         color: #fff;
         text-decoration: none;
     }
+
+    .btn-grad:focus-visible {
+        outline: 2px solid var(--dark-purple-color);
+    }
 </style>
 
 <a class='btn-grad' part='button'>
     <slot> Botão </slot>
-<a>
+</a>
 `;
 
 class CustomButton extends HTMLElement {
-    static observedAttributes = ['href'];
+    static formAssociated = true;
+    static observedAttributes = ["href", "type"];
 
     constructor() {
         super();
-        this.attachShadow({ mode: 'open' }).append(
+        this.internals = this.attachInternals();
+        this.attachShadow({ mode: "open" }).append(
             template.content.cloneNode(true),
         );
-        this.link = this.shadowRoot.querySelector('a');
+        this.link = this.shadowRoot.querySelector("a");
+
+        this.link.addEventListener("click", (event) => {
+            if (!this.#isSubmit()) return;
+            event.preventDefault();
+            this.#submit();
+        });
+
+        this.link.addEventListener("keydown", (event) => {
+            if (
+                this.#isSubmit() &&
+                (event.key === "Enter" || event.key === " ")
+            ) {
+                event.preventDefault();
+                this.#submit();
+            }
+        });
     }
 
     connectedCallback() {
-        this.#updateHref();
+        this.#update();
     }
 
-    #updateHref() {
-        this.link.setAttribute('href', this.getAttribute('href') ?? '#');
+    attributeChangedCallback() {
+        this.#update();
+    }
+
+    #isSubmit() {
+        return this.getAttribute("type") === "submit";
+    }
+
+    #submit() {
+        this.internals.form?.requestSubmit();
+    }
+
+    #update() {
+        if (this.#isSubmit()) {
+            this.link.removeAttribute("href");
+            this.link.setAttribute("role", "button");
+            this.link.setAttribute("tabindex", "0");
+        } else {
+            this.link.setAttribute("href", this.getAttribute("href") ?? "#");
+            this.link.removeAttribute("role");
+            this.link.removeAttribute("tabindex");
+        }
     }
 }
 
-if (!customElements.get('custom-button')) {
-    customElements.define('custom-button', CustomButton);
+if (!customElements.get("custom-button")) {
+    customElements.define("custom-button", CustomButton);
 }
