@@ -1,12 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Bem-vindo a Livraria!{% endblock %}
 
 {% block body %}
     {% include 'layout/_header.html.twig' %}
-    <div class="container">
-        <custom-title href="#">
-            <h2>Livros</h2>
-        </custom-title>
-    </div>
+    <main class="custom-container">
+        {% include 'home/title.html.twig' %}
+        <section class="row mt-5">
+            <aside class="col-lg-3 mb-4">
+                <custom-title>
+                    <h4>Livros</h4>
+                </custom-title>
+                {% include 'layout/_filter.html.twig' %}
+            </aside>
+
+            <div class="col-lg-9">
+            </div>
+        </section>
+    </main>
 {% endblock %}

@@ -11,6 +11,11 @@ body {
   font-family: system-ui, -apple-system, sans-serif;
 }
 
+.custom-container {
+  padding: 35px;
+}
+
+
 .hero {
   display: flex;
   min-height: 620px;
@@ -74,11 +79,12 @@ body {
     background: var(--hero-bg);
   }
 
-  @media (max-width: 768px) {
-    .hero {
-      flex-direction: column;
-      min-height: auto;
-    }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    min-height: auto;
 
     .hero-text {
       width: 100%;
