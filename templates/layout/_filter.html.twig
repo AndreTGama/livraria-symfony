@@ -1,23 +1,52 @@
-<nav class="list-group subject-filter">
-    <a
-        href="{{ path('app_home') }}"
-        class="list-group-item list-group-item-action {{ subjectActive is null ? 'active' }}"
-        {% if subjectActive is null %}aria-current="page"{% endif %}
-    >
-        Todos os assuntos
-    </a>
+<form action="{{ path('app_home') }}" method="get" class="catalog-filter">
+    <h3>Filtrar livros</h3>
 
-    {% for item in subjects %}
-        {% set isActive = subjectActive == item.id %}
-        <a
-            href="{{ path('app_home', {subject: item.id}) }}"
-            class="list-group-item list-group-item-action d-flex justify-content-between align-items-center {{ isActive ? 'active' }}"
-            {% if isActive %}aria-current="page"{% endif %}
+    <div class="mb-3">
+        <label for="catalog-search" class="form-label">Título ou editora</label>
+        <input
+            id="catalog-search"
+            name="q"
+            type="search"
+            class="form-control"
+            value="{{ search }}"
+            placeholder="Buscar livros"
         >
-            {{ item.description }}
-            <span class="badge rounded-pill text-bg-light">{{ item.total }}</span>
-        </a>
-    {% else %}
-        <p class="text-muted">Nenhum assunto cadastrado.</p>
-    {% endfor %}
-</nav>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label d-block">Assuntos</label>
+        {% for item in subjects %}
+            <div class="form-check">
+                <input
+                    type="checkbox"
+                    class="form-check-input"
+                    name="subjects[]"
+                    id="subject-{{ item.id }}"
+                    value="{{ item.id }}"
+                    {{ item.id in selectedSubjectIds ? 'checked' : '' }}
+                />
+                <label class="form-check-label" for="subject-{{ item.id }}">
+                    {{ item.description }}
+                </label>
+            </div>
+        {% else %}
+            <p class="text-muted small mb-0">Nenhum assunto cadastrado.</p>
+        {% endfor %}
+    </div>
+
+    <div class="mb-3">
+        <label for="catalog-authors" class="form-label">Autores</label>
+        <select id="catalog-authors" name="authors[]" class="form-select" multiple size="5">
+            {% for author in authors %}
+                <option value="{{ author.id }}" {{ author.id in selectedAuthorIds ? 'selected' }}>
+                    {{ author.name }}
+                </option>
+            {% else %}
+                <option disabled>Nenhum autor cadastrado</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Aplicar filtros</button>
+    <a href="{{ path('app_home') }}" class="btn btn-outline-secondary w-100 mt-2">Limpar filtros</a>
+</form>

@@ -8,13 +8,36 @@
         {% include 'home/title.html.twig' %}
         <section class="row mt-5">
             <aside class="col-lg-3 mb-4">
-                <custom-title>
-                    <h4>Livros</h4>
-                </custom-title>
-                {% include 'layout/_filter.html.twig' %}
+                {% include 'layout/_filter.html.twig' with {
+                    subjects: subjects,
+                    authors: authors,
+                    selectedSubjectIds: selectedSubjectIds,
+                    selectedAuthorIds: selectedAuthorIds,
+                    search: search
+                } %}
             </aside>
 
             <div class="col-lg-9">
+                <p class="text-muted" role="status">
+                    {{ totalBooks }} {{ totalBooks == 1 ? 'livro encontrado' : 'livros encontrados' }}
+                </p>
+
+                {% if books is empty %}
+                    <div class="alert alert-info" role="status">
+                        Nenhum livro encontrado com os filtros selecionados.
+                    </div>
+                {% else %}
+                    <div class="book-grid">
+                        {% for book in books %}
+                            {% include 'layout/_card.html.twig' with {book: book} %}
+                        {% endfor %}
+                    </div>
+
+                    {% include 'layout/_pagination.html.twig' with {
+                        page: page,
+                        totalPages: totalPages
+                    } %}
+                {% endif %}
             </div>
         </section>
     </main>

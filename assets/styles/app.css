@@ -15,6 +15,26 @@ body {
   padding: 35px;
 }
 
+.catalog-filter {
+  position: sticky;
+  top: 1rem;
+}
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: 1rem;
+}
+
+.book-card {
+  border-color: #e5e1e8;
+  box-shadow: 0 0.25rem 1rem rgb(64 6 75 / 6%);
+}
+
+.book-card .card-title {
+  color: var(--dark-purple-color);
+}
+
 
 .hero {
   display: flex;

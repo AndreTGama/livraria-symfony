@@ -1,0 +1,31 @@
+{% if totalPages > 1 %}
+    <nav class="mt-4" aria-label="Paginação dos livros">
+        <ul class="pagination justify-content-center">
+            <li class="page-item {{ page == 1 ? 'disabled' }}">
+                {% if page > 1 %}
+                    <a class="page-link" href="{{ path('app_home', app.request.query.all|merge({page: page - 1})) }}" aria-label="Página anterior">Anterior</a>
+                {% else %}
+                    <span class="page-link">Anterior</span>
+                {% endif %}
+            </li>
+
+            {% for pageNumber in max(1, page - 2)..min(totalPages, page + 2) %}
+                <li class="page-item {{ pageNumber == page ? 'active' }}">
+                    <a
+                        class="page-link"
+                        href="{{ path('app_home', app.request.query.all|merge({page: pageNumber})) }}"
+                        {% if pageNumber == page %}aria-current="page"{% endif %}
+                    >{{ pageNumber }}</a>
+                </li>
+            {% endfor %}
+
+            <li class="page-item {{ page == totalPages ? 'disabled' }}">
+                {% if page < totalPages %}
+                    <a class="page-link" href="{{ path('app_home', app.request.query.all|merge({page: page + 1})) }}" aria-label="Próxima página">Próxima</a>
+                {% else %}
+                    <span class="page-link">Próxima</span>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+{% endif %}
