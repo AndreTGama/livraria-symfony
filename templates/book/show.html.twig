@@ -9,46 +9,46 @@
         <tbody>
             <tr>
                 <th>Id</th>
-                <td>{{ livro.id }}</td>
+                <td>{{ book.id }}</td>
             </tr>
             <tr>
                 <th>Titulo</th>
-                <td>{{ livro.titulo }}</td>
+                <td>{{ book.title }}</td>
             </tr>
             <tr>
                 <th>Editora</th>
-                <td>{{ livro.editora }}</td>
+                <td>{{ book.publisher }}</td>
             </tr>
             <tr>
                 <th>Edicao</th>
-                <td>{{ livro.edicao }}</td>
+                <td>{{ book.edition }}</td>
             </tr>
             <tr>
                 <th>AnoPublicacao</th>
-                <td>{{ livro.anoPublicacao }}</td>
+                <td>{{ book.publicationYear }}</td>
             </tr>
             <tr>
                 <th>Valor</th>
-                <td>{{ livro.valor }}</td>
+                <td>{{ book.price }}</td>
             </tr>
             <tr>
                 <th>CreatedAt</th>
-                <td>{{ livro.createdAt ? livro.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ book.createdAt ? book.createdAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
                 <th>UpdatedAt</th>
-                <td>{{ livro.updatedAt ? livro.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ book.updatedAt ? book.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
                 <th>DeletedAt</th>
-                <td>{{ livro.deletedAt ? livro.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ book.deletedAt ? book.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
         </tbody>
     </table>
 
     <a href="{{ path('app_book_index') }}">back to list</a>
 
-    <a href="{{ path('app_book_edit', {'id': livro.id}) }}">edit</a>
+    <a href="{{ path('app_book_edit', {'id': book.id}) }}">edit</a>
 
-    {{ include('livro/_delete_form.html.twig') }}
+    {{ include('book/_delete_form.html.twig') }}
 {% endblock %}

@@ -25,10 +25,10 @@
             <tr>
                 <td>{{ book.id }}</td>
                 <td>{{ book.title }}</td>
-                <td>{{ book.editora }}</td>
-                <td>{{ book.edicao }}</td>
-                <td>{{ book.anoPublicacao }}</td>
-                <td>{{ book.valor }}</td>
+                <td>{{ book.publisher }}</td>
+                <td>{{ book.edition }}</td>
+                <td>{{ book.publicationYear }}</td>
+                <td>{{ book.price }}</td>
                 <td>{{ book.createdAt ? book.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ book.updatedAt ? book.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ book.deletedAt ? book.deletedAt|date('Y-m-d H:i:s') : '' }}</td>

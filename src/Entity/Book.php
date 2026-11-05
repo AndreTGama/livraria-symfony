@@ -134,12 +134,12 @@ class Book
     /**
      * @return Collection<int, Author>
      */
-    public function getAutores(): Collection
+    public function getAuthors(): Collection
     {
         return $this->authors;
     }
 
-    public function addAutor(Author $author): static
+    public function addAuthor(Author $author): static
     {
         if (!$this->authors->contains($author)) {
             $this->authors->add($author);
@@ -148,7 +148,7 @@ class Book
         return $this;
     }
 
-    public function removeAutor(Author $author): static
+    public function removeAuthor(Author $author): static
     {
         $this->authors->removeElement($author);
 
@@ -158,12 +158,12 @@ class Book
     /**
      * @return Collection<int, Subject>
      */
-    public function getAssuntos(): Collection
+    public function getSubjects(): Collection
     {
         return $this->subjects;
     }
 
-    public function addAssunto(Subject $subject): static
+    public function addSubject(Subject $subject): static
     {
         if (!$this->subjects->contains($subject)) {
             $this->subjects->add($subject);
