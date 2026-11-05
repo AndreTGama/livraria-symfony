@@ -9,13 +9,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'Autor')]
 #[ORM\Entity(repositoryClass: AuthorRepository::class)]
 #[Gedmo\SoftDeleteable(fieldName: 'deletedAt')]
 class Author
 {
-    // Timestamp e Softdelete criado para implementar a rastreabilidadem desse modo podemos ver quando a informação foi criada, editada e deletada
+    # Timestamp e Softdelete criado para implementar a rastreabilidadem desse modo podemos ver quando a informação foi criada, editada e deletada
     use TimestampableTrait, SoftDeleteableTrait;
     
     #[ORM\Id]
@@ -23,6 +24,8 @@ class Author
     #[ORM\Column(name: 'CodAu')]
     private ?int $id = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 40)]
     #[ORM\Column(name: 'Nome', length: 40)]
     private ?string $name = null;
 

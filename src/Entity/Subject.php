@@ -9,13 +9,19 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'Assunto')]
 #[ORM\Entity(repositoryClass: SubjectRepository::class)]
 #[Gedmo\SoftDeleteable(fieldName: 'deletedAt')]
+#[UniqueEntity(
+    fields: 'description',
+    message: 'Descrição já existe',
+)]
 class Subject
 {
-    // Timestamp e Softdelete criado para implementar a rastreabilidadem desse modo podemos ver quando a informação foi criada, editada e deletada
+    # Timestamp e Softdelete criado para implementar a rastreabilidadem desse modo podemos ver quando a informação foi criada, editada e deletada
     use TimestampableTrait, SoftDeleteableTrait;
 
     #[ORM\Id]
@@ -23,6 +29,8 @@ class Subject
     #[ORM\Column(name: 'CodAs')]
     private ?int $id = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 20)]
     #[ORM\Column(name: 'Descricao', length: 20)]
     private ?string $description = null;
 
