@@ -2,28 +2,27 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\Autor;
-use App\Repository\AutorRepository;
+use App\Entity\Author;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-final class AutorControllerTest extends WebTestCase
+final class AuthorControllerTest extends WebTestCase
 {
     private KernelBrowser $client;
     private EntityManagerInterface $manager;
-    /** @var EntityRepository<Autor> $autorRepository */
-    private EntityRepository $autorRepository;
-    private string $path = '/autor/';
+    /** @var EntityRepository<Author> $authorRepository */
+    private EntityRepository $authorRepository;
+    private string $path = '/author/';
 
     protected function setUp(): void
     {
         $this->client = static::createClient();
         $this->manager = static::getContainer()->get('doctrine')->getManager();
-        $this->autorRepository = $this->manager->getRepository(Autor::class);
+        $this->authorRepository = $this->manager->getRepository(Author::class);
 
-        foreach ($this->autorRepository->findAll() as $object) {
+        foreach ($this->authorRepository->findAll() as $object) {
             $this->manager->remove($object);
         }
 
@@ -47,18 +46,18 @@ final class AutorControllerTest extends WebTestCase
         self::assertResponseStatusCodeSame(200);
 
         $this->client->submitForm('Save', [
-            'autor[nome]' => 'Testing',
+            'author[name]' => 'Testing',
         ]);
 
-        self::assertResponseRedirects('/autor');
+        self::assertResponseRedirects('/author');
 
-        self::assertSame(1, $this->autorRepository->count([]));
+        self::assertSame(1, $this->authorRepository->count([]));
     }
 
     public function testShow(): void
     {
-        $fixture = new Autor();
-        $fixture->setNome('My Title');
+        $fixture = new Author();
+        $fixture->setName('My Title');
 
         $this->manager->persist($fixture);
         $this->manager->flush();
@@ -71,8 +70,8 @@ final class AutorControllerTest extends WebTestCase
 
     public function testEdit(): void
     {
-        $fixture = new Autor();
-        $fixture->setNome('Value');
+        $fixture = new Author();
+        $fixture->setName('Value');
 
         $this->manager->persist($fixture);
         $this->manager->flush();
@@ -80,20 +79,20 @@ final class AutorControllerTest extends WebTestCase
         $this->client->request('GET', sprintf('%s%s/edit', $this->path, $fixture->getId()));
 
         $this->client->submitForm('Update', [
-            'autor[nome]' => 'Something New',
+            'author[name]' => 'Something New',
         ]);
 
-        self::assertResponseRedirects('/autor');
+        self::assertResponseRedirects('/author');
 
-        $fixture = $this->autorRepository->findAll();
+        $fixture = $this->authorRepository->findAll();
 
-        self::assertSame('Something New', $fixture[0]->getNome());
+        self::assertSame('Something New', $fixture[0]->getName());
     }
 
     public function testRemove(): void
     {
-        $fixture = new Autor();
-        $fixture->setNome('Value');
+        $fixture = new Author();
+        $fixture->setName('Value');
 
         $this->manager->persist($fixture);
         $this->manager->flush();
@@ -101,7 +100,7 @@ final class AutorControllerTest extends WebTestCase
         $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getId()));
         $this->client->submitForm('Delete');
 
-        self::assertResponseRedirects('/autor');
-        self::assertSame(0, $this->autorRepository->count([]));
+        self::assertResponseRedirects('/author');
+        self::assertSame(0, $this->authorRepository->count([]));
     }
 }
