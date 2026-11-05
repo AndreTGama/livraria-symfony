@@ -10,41 +10,54 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 #[ORM\Table(name: 'Livro')]
 #[Gedmo\SoftDeleteable(fieldName: 'deletedAt')]
 class Book
 {
-    // Timestamp e Softdelete criado para implementar a rastreabilidadem desse modo podemos ver quando a informação foi criada, editada e deletada
+    # Timestamp e Softdelete criado para implementar a rastreabilidade desse modo podemos ver quando a informação foi criada, editada e deletada
     use TimestampableTrait, SoftDeleteableTrait;
 
-    // TODO rever nome da coluna (CodL ou CodI), não ficou claro na imagem.
-    // Usando CodL para seguir o padrão das outras tabelas (CodAu, CodAs).
+    # TODO rever nome da coluna (CodL ou CodI), não ficou claro na imagem.
+    # Usando CodL para seguir o padrão das outras tabelas (CodAu, CodAs).
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(name: 'CodL')]
     private ?int $id = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 40)]
     #[ORM\Column(name: 'Titulo', length: 40)]
     private ?string $title = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 40)]
     #[ORM\Column(name: 'Editora', length: 40)]
     private ?string $publisher = null;
 
+    #[Assert\NotNull]
+    #[Assert\Positive]
     #[ORM\Column(name: 'Edicao')]
     private ?int $edition = null;
 
-    // Usando smallint no ano de publicação para economizar espaço, melhora o índice de pesquisa e garante que o valor esperado seja um ano válido.
+    #[Assert\NotNull]
+    # usando maxPropertyPath para limitar o ano da publicação com o ano atual mais um
+    #[Assert\Range(min:1000, maxPropertyPath: 'maxYear')]
+    # Usando smallint no ano de publicação para economizar espaço, melhora o índice de pesquisa e garante que o valor esperado seja um ano válido.
     #[ORM\Column(name: 'AnoPublicacao', type: Types::SMALLINT)]
     private ?int $publicationYear = null;
 
+    #[Assert\NotNull()]
+    #[Assert\PositiveOrZero()]
     #[ORM\Column(name: 'Valor', type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $price = null;
 
     /**
      * @var Collection<int, Author>
      */
+    #[Assert\Count(min: 1, minMessage: 'Selecione pelo menos um autor')]
     #[ORM\ManyToMany(targetEntity: Author::class, inversedBy: 'books')]
     #[ORM\JoinTable(name: 'Livro_Autor')]
     #[ORM\JoinColumn(name: 'Livro_CodL', referencedColumnName: 'CodL')]
@@ -54,6 +67,7 @@ class Book
     /**
      * @var Collection<int, Subject>
      */
+    #[Assert\Count(min: 1, minMessage: 'Selecione pelo menos um assunto/tema')]
     #[ORM\ManyToMany(targetEntity: Subject::class, inversedBy: 'books')]
     #[ORM\JoinTable(name: 'Livro_Assunto')]
     #[ORM\JoinColumn(name: 'Livro_CodL', referencedColumnName: 'CodL')]
@@ -177,5 +191,11 @@ class Book
         $this->subjects->removeElement($subject);
 
         return $this;
+    }
+
+    # Criando essa função, para pegar o ano atual mais 1
+    public function getMaxYear(): int
+    {
+        return (int) date('Y') + 1;
     }
 }
