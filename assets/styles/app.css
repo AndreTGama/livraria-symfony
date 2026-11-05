@@ -1,5 +1,8 @@
 :root {
   --hero-bg: #fdfbea;
+  --purple-color: #9c07b6;
+  --dark-purple-color: #40064b;
+  --blue-color: #6180d9;
 }
 
 body {
@@ -14,70 +17,79 @@ body {
   background: var(--hero-bg);
   position: relative;
   overflow: hidden;
-}
-
-.hero-text {
-  padding: 3rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  z-index: 2;
-  width: 40%;
-}
-
-.button {
-  width: 200px;
-}
-
-.hero-image {
-  flex: 1;
-  position: relative;
-}
-
-.hero-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.hero-wave {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: -1px;
-  width: 30%;
-  height: 100%;
-  color: var(--hero-bg);
-  pointer-events: none;
-  z-index: 1;
-}
-
-.bubble {
-  position: absolute;
-  width: var(--size, 40px);
-  height: var(--size, 40px);
-  border-radius: 50%;
-  background: var(--hero-bg);
-}
-
-@media (max-width: 768px) {
-  .hero {
-    flex-direction: column;
-    min-height: auto;
-  }
 
   .hero-text {
-    width: 100%;
-    padding: 2rem 1.5rem;
-    box-sizing: border-box;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 2;
+    width: 40%;
+    color: var(--purple-color);
+
+    h1 {
+      font-weight: 700;
+    }
+
+    p {
+      font-weight: 400;
+    }
+
+    .button {
+      width: 200px;
+    }
   }
 
   .hero-image {
-    display: none;
+    flex: 1;
+    position: relative;
+  }
+
+  .hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   .hero-wave {
-    display: none; 
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -1px;
+    width: 30%;
+    height: 100%;
+    color: var(--hero-bg);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .bubble {
+    position: absolute;
+    width: var(--size, 40px);
+    height: var(--size, 40px);
+    border-radius: 50%;
+    background: var(--hero-bg);
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      flex-direction: column;
+      min-height: auto;
+    }
+
+    .hero-text {
+      width: 100%;
+      padding: 2rem 1.5rem;
+      box-sizing: border-box;
+    }
+
+    .hero-image {
+      display: none;
+    }
+
+    .hero-wave {
+      display: none;
+    }
   }
 }
