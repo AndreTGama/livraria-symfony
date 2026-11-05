@@ -19,10 +19,12 @@ body {
   overflow: hidden;
 
   .hero-text {
-    padding: 3rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    padding: 3rem;
+    display: flex;
     z-index: 2;
     width: 40%;
     color: var(--purple-color);
