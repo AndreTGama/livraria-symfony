@@ -2,18 +2,25 @@
 
 namespace App\Entity;
 
+use App\Entity\Trait\SoftDeleteableTrait;
+use App\Entity\Trait\TimestampableTrait;
 use App\Repository\LivroRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: LivroRepository::class)]
 #[ORM\Table(name: 'Livro')]
+#[Gedmo\SoftDeleteable(fieldName: 'deletedAt')]
 class Livro
 {
-    // TODO: rever nome da coluna (CodL ou CodI), não ficou claro na imagem.
-    // Usando CodL para seguir o padrão das outras tabelas (CodAu, codAs).
+    // Timestamp e Softdelete criado para implementar a rastreabilidadem desse modo podemos ver quando a informação foi criada, editada e deletada
+    use TimestampableTrait, SoftDeleteableTrait;
+
+    // TODO rever nome da coluna (CodL ou CodI), não ficou claro na imagem.
+    // Usando CodL para seguir o padrão das outras tabelas (CodAu, CodAs).
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(name: 'CodL')]
@@ -28,7 +35,7 @@ class Livro
     #[ORM\Column(name: 'Edicao')]
     private ?int $edicao = null;
 
-    # Usando smallint no ano de publicação para economizar espaço, melhora o índice de pesquisa e garante que o valor esperado seja um ano válido.
+    // Usando smallint no ano de publicação para economizar espaço, melhora o índice de pesquisa e garante que o valor esperado seja um ano válido.
     #[ORM\Column(name: 'AnoPublicacao', type: Types::SMALLINT)]
     private ?int $anoPublicacao = null;
 
