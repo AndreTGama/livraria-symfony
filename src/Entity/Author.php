@@ -62,20 +62,20 @@ class Author
         return $this->books;
     }
 
-    public function addLivro(Book $book): static
+    public function addBook(Book $book): static
     {
         if (!$this->books->contains($book)) {
             $this->books->add($book);
-            $book->addAutor($this);
+            $book->addAuthor($this);
         }
 
         return $this;
     }
 
-    public function removeLivro(Book $book): static
+    public function removeBook(Book $book): static
     {
         if ($this->books->removeElement($book)) {
-            $book->removeAutor($this);
+            $book->removeAuthor($this);
         }
 
         return $this;

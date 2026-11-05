@@ -29,7 +29,7 @@ class Subject
     /**
      * @var Collection<int, Book>
      */
-    #[ORM\ManyToMany(targetEntity: Book::class, mappedBy: 'assuntos')]
+    #[ORM\ManyToMany(targetEntity: Book::class, mappedBy: 'subjects')]
     private Collection $books;
 
     public function __construct()
@@ -66,7 +66,7 @@ class Subject
     {
         if (!$this->books->contains($book)) {
             $this->books->add($book);
-            $book->addAssunto($this);
+            $book->addSubject($this);
         }
 
         return $this;
