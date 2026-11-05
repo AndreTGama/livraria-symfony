@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[Gedmo\SoftDeleteable(fieldName: 'deletedAt')]
 #[UniqueEntity(
     fields: 'description',
-    message: 'Descrição já existe',
+    message: 'Assunto existente na base de dados',
 )]
 class Subject
 {
