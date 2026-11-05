@@ -12,7 +12,7 @@ class SubjectType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('descricao');
+            ->add('description');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

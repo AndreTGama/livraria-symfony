@@ -172,7 +172,7 @@ class Book
         return $this;
     }
 
-    public function removeAssunto(Subject $subject): static
+    public function removeSubject(Subject $subject): static
     {
         $this->subjects->removeElement($subject);
 

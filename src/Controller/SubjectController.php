@@ -2,9 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Assunto;
-use App\Form\AssuntoType;
-use App\Repository\AssuntoRepository;
+use App\Entity\Subject;
+use App\Form\SubjectType;
 use App\Repository\SubjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,71 +11,71 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/assunto')]
+#[Route('/subject')]
 final class SubjectController extends AbstractController
 {
-    #[Route(name: 'app_assunto_index', methods: ['GET'])]
-    public function index(SubjectRepository $assuntoRepository): Response
+    #[Route(name: 'app_subject_index', methods: ['GET'])]
+    public function index(SubjectRepository $subjectRepository): Response
     {
-        return $this->render('assunto/index.html.twig', [
-            'assuntos' => $assuntoRepository->findAll(),
+        return $this->render('subject/index.html.twig', [
+            'subjects' => $subjectRepository->findAll(),
         ]);
     }
 
-    #[Route('/new', name: 'app_assunto_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_subject_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $assunto = new Assunto();
-        $form = $this->createForm(AssuntoType::class, $assunto);
+        $subject = new Subject();
+        $form = $this->createForm(SubjectType::class, $subject);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($assunto);
+            $entityManager->persist($subject);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_assunto_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_subject_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('assunto/new.html.twig', [
-            'assunto' => $assunto,
+        return $this->render('subject/new.html.twig', [
+            'subject' => $subject,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}', name: 'app_assunto_show', methods: ['GET'])]
-    public function show(Assunto $assunto): Response
+    #[Route('/{id}', name: 'app_subject_show', methods: ['GET'])]
+    public function show(Subject $subject): Response
     {
-        return $this->render('assunto/show.html.twig', [
-            'assunto' => $assunto,
+        return $this->render('subject/show.html.twig', [
+            'subject' => $subject,
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_assunto_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Assunto $assunto, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/edit', name: 'app_subject_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Subject $subject, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(AssuntoType::class, $assunto);
+        $form = $this->createForm(SubjectType::class, $subject);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_assunto_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_subject_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('assunto/edit.html.twig', [
-            'assunto' => $assunto,
+        return $this->render('subject/edit.html.twig', [
+            'subject' => $subject,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{id}', name: 'app_assunto_delete', methods: ['POST'])]
-    public function delete(Request $request, Assunto $assunto, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}', name: 'app_subject_delete', methods: ['POST'])]
+    public function delete(Request $request, Subject $subject, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$assunto->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($assunto);
+        if ($this->isCsrfTokenValid('delete'.$subject->getId(), $request->getPayload()->getString('_token'))) {
+            $entityManager->remove($subject);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_assunto_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_subject_index', [], Response::HTTP_SEE_OTHER);
     }
 }

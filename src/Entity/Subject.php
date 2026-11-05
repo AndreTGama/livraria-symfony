@@ -62,7 +62,7 @@ class Subject
         return $this->books;
     }
 
-    public function addLivro(Book $book): static
+    public function addBook(Book $book): static
     {
         if (!$this->books->contains($book)) {
             $this->books->add($book);
@@ -72,10 +72,10 @@ class Subject
         return $this;
     }
 
-    public function removeLivro(Book $book): static
+    public function removeBook(Book $book): static
     {
         if ($this->books->removeElement($book)) {
-            $book->removeAssunto($this);
+            $book->removeSubject($this);
         }
 
         return $this;

@@ -9,18 +9,18 @@
         <tbody>
             <tr>
                 <th>Id</th>
-                <td>{{ assunto.id }}</td>
+                <td>{{ subject.id }}</td>
             </tr>
             <tr>
                 <th>Descricao</th>
-                <td>{{ assunto.descricao }}</td>
+                <td>{{ subject.description }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_assunto_index') }}">back to list</a>
+    <a href="{{ path('app_subject_index') }}">back to list</a>
 
-    <a href="{{ path('app_assunto_edit', {'id': assunto.id}) }}">edit</a>
+    <a href="{{ path('app_subject_edit', {'id': subject.id}) }}">edit</a>
 
-    {{ include('assunto/_delete_form.html.twig') }}
+    {{ include('subject/_delete_form.html.twig') }}
 {% endblock %}

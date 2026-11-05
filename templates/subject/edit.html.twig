@@ -5,9 +5,9 @@
 {% block body %}
     <h1>Edit Assunto</h1>
 
-    {{ include('assunto/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('subject/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_assunto_index') }}">back to list</a>
+    <a href="{{ path('app_subject_index') }}">back to list</a>
 
-    {{ include('assunto/_delete_form.html.twig') }}
+    {{ include('subject/_delete_form.html.twig') }}
 {% endblock %}
