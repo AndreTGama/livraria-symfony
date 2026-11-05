@@ -5,9 +5,9 @@
 {% block body %}
     <h1>Edit Autor</h1>
 
-    {{ include('autor/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('author/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('app_author_index') }}">back to list</a>
 
-    {{ include('autor/_delete_form.html.twig') }}
+    {{ include('author/_delete_form.html.twig') }}
 {% endblock %}

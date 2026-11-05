@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Author;
+use App\Exception\AssociatedAuthorException;
 use App\Form\AuthorType;
 use App\Repository\AuthorRepository;
 use App\Service\AuthorService;
@@ -77,8 +78,12 @@ final class AuthorController extends AbstractController
     public function delete(Request $request, Author $author): Response
     {
         if ($this->isCsrfTokenValid('delete'.$author->getId(), $request->getPayload()->getString('_token'))) {
-            $this->authorService->delete($author);
-            $this->addFlash('success', 'Author excluído com sucesso');
+            try {
+                $this->authorService->delete($author);
+                $this->addFlash('success', 'Autor excluído com sucesso');
+            } catch (AssociatedAuthorException $exception) {
+                $this->addFlash('warning', $exception->getMessage());
+            }
         }
 
         return $this->redirectToRoute('app_author_index', [], Response::HTTP_SEE_OTHER);

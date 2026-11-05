@@ -9,30 +9,30 @@
         <tbody>
             <tr>
                 <th>Id</th>
-                <td>{{ autor.id }}</td>
+                <td>{{ author.id }}</td>
             </tr>
             <tr>
                 <th>Nome</th>
-                <td>{{ autor.nome }}</td>
+                <td>{{ author.name }}</td>
             </tr>
             <tr>
                 <th>CreatedAt</th>
-                <td>{{ autor.createdAt ? autor.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ author.createdAt ? author.createdAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
                 <th>UpdatedAt</th>
-                <td>{{ autor.updatedAt ? autor.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ author.updatedAt ? author.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
                 <th>DeletedAt</th>
-                <td>{{ autor.deletedAt ? autor.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ author.deletedAt ? author.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
         </tbody>
     </table>
 
     <a href="{{ path('app_author_index') }}">back to list</a>
 
-    <a href="{{ path('app_author_edit', {'id': autor.id}) }}">edit</a>
+    <a href="{{ path('app_author_edit', {'id': author.id}) }}">edit</a>
 
-    {{ include('autor/_delete_form.html.twig') }}
+    {{ include('author/_delete_form.html.twig') }}
 {% endblock %}

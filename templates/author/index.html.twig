@@ -5,6 +5,10 @@
 {% block body %}
     <h1>Autor index</h1>
 
+    {% for message in app.flashes('warning') %}
+        <div role="alert">{{ message }}</div>
+    {% endfor %}
+
     <table class="table">
         <thead>
             <tr>
