@@ -11,16 +11,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    <a class="nav-link active" aria-current="page" href="{{path('app_home')}}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/book">Books</a>
+                    <a class="nav-link" href="{{path('app_book_index')}}">Livros</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/author">Author</a>
+                    <a class="nav-link" href="{{path('app_author_index')}}">Autores</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/subject">Subject</a>
+                    <a class="nav-link" href="{{path('app_subject_index')}}">Assuntos</a>
                 </li>
             </ul>
         </div>

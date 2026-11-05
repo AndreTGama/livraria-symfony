@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/subject')]
+#[Route('/assuntos')]
 final class SubjectController extends AbstractController
 {
     #[Route(name: 'app_subject_index', methods: ['GET'])]
