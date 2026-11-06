@@ -1,0 +1,25 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Editora</th>
+            <th>Ano</th>
+            <th>Valor</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for authorId, books in reports %}
+            <tr class="table-secondary">
+                <th colspan="4">{{ (books|first).autor_nome }}</th>
+            </tr>
+            {% for book in books %}
+                <tr>
+                    <td>{{ book.titulo }}</td>
+                    <td>{{ book.editora }}</td>
+                    <td>{{ book.ano_publicacao }}</td>
+                    <td>{{ book.valor }}</td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+    </tbody>
+</table>

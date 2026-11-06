@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Relatório de Livros por Autor</title>
+    <style>
+        body {
+            font-family: "DejaVu Sans", sans-serif;
+            font-size: 11px;
+            color: #333;
+        }
+        h1 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 4px 6px;
+            text-align: left;
+        }
+        thead th {
+            background: #333;
+            color: #fff;
+        }
+        .table-secondary th {
+            background: #e2e3e5;
+        }
+    </style>
+</head>
+<body>
+    <h1>Relatório de Livros por Autor</h1>
+    {% include 'report/_table.html.twig' %}
+</body>
+</html>
