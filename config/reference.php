@@ -1611,6 +1611,38 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         customClass?: list<scalar|Param|null>,
  *     },
  * }
+ * @psalm-type DataTablesConfig = array{
+ *     max_page_length?: int|Param, // Upper bound applied to the DataTables "length" parameter on Ajax requests. "length=-1" (show all) is honored only when the table declares -1 in lengthMenu(); otherwise it is capped to this value. // Default: 1000
+ *     options?: array{ // Defaults stamped onto every table; each key maps to the DataTables.net option of the same name.
+ *         language?: scalar|Param|null, // Locale code or language file URL; unset follows the request locale.
+ *         stateSave?: bool|Param, // Persist paging, search and ordering in the browser.
+ *         showHeaderResetButton?: bool|Param, // Show a reset button in the header when filters are active.
+ *         layout?: mixed, // DataTables.net layout: maps a position (topStart, topEnd, bottomStart, bottomEnd) to a feature. // Default: {"topStart":"pageLength","topEnd":"search","bottomStart":"info","bottomEnd":"paging"}
+ *         lengthMenu?: list<scalar|Param|null>,
+ *         pageLength?: int|Param, // Initial page size; should be one of "lengthMenu" when both are set (a mismatch is deprecated and throws in 2.0).
+ *         paging?: array{ // Pagination control options.
+ *             boundaryNumbers?: bool|Param, // Always show the first and last page numbers. // Default: true
+ *             buttons?: int|Param, // Maximum number of pagination buttons. // Default: 7
+ *             firstLast?: bool|Param, // Show the first and last buttons. // Default: true
+ *             numbers?: bool|Param, // Show page number buttons. // Default: true
+ *             previousNext?: bool|Param, // Show the previous and next buttons. // Default: true
+ *         },
+ *     },
+ *     table_attributes?: array{ // HTML attributes added to every rendered table element.
+ *         class?: scalar|Param|null, // CSS classes of the table element. // Default: "table"
+ *     },
+ *     extensions?: array{ // DataTables.net extensions enabled on every table.
+ *         buttons?: list<scalar|Param|null>,
+ *         select?: array{ // Row selection; leaving it out disables the extension.
+ *             style?: scalar|Param|null, // Selection style; values outside the SelectStyle enum are deprecated and throw in 2.0. // Default: "single"
+ *         },
+ *     },
+ *     edit_modal?: array{ // Edit modal rendering.
+ *         template?: scalar|Param|null, // Twig template of the modal. // Default: "@PentiminaxDataTables/modal/datatables/edit_modal.html.twig"
+ *         body_template?: scalar|Param|null, // Twig template of the modal form body. // Default: "@PentiminaxDataTables/modal/datatables/_form_body.html.twig"
+ *         default_title?: scalar|Param|null, // Modal title, translated by the template in the "messages" domain; the default is translated from the "DataTables" domain. // Default: "edit_modal.default_title"
+ *     },
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -1629,6 +1661,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     twig_component?: TwigComponentConfig,
  *     live_component?: LiveComponentConfig,
  *     sweet_alert?: SweetAlertConfig,
+ *     data_tables?: DataTablesConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -1650,6 +1683,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         twig_component?: TwigComponentConfig,
  *         live_component?: LiveComponentConfig,
  *         sweet_alert?: SweetAlertConfig,
+ *         data_tables?: DataTablesConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -1669,6 +1703,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         twig_component?: TwigComponentConfig,
  *         live_component?: LiveComponentConfig,
  *         sweet_alert?: SweetAlertConfig,
+ *         data_tables?: DataTablesConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -1689,6 +1724,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         twig_component?: TwigComponentConfig,
  *         live_component?: LiveComponentConfig,
  *         sweet_alert?: SweetAlertConfig,
+ *         data_tables?: DataTablesConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,

@@ -19,4 +19,5 @@ return [
     Symfony\UX\LiveComponent\LiveComponentBundle::class => ['all' => true],
     Pentiminax\UX\SweetAlert\SweetAlertBundle::class => ['all' => true],
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
+    Pentiminax\UX\DataTables\PentiminaxDataTablesBundle::class => ['all' => true],
 ];

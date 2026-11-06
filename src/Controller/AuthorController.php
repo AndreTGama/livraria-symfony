@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\DataTables\AuthorsDataTable;
 use App\Entity\Author;
 use App\Exception\AssociatedAuthorException;
 use App\Form\AuthorType;
@@ -21,10 +22,10 @@ final class AuthorController extends AbstractController
     }
 
     #[Route(name: 'app_author_index', methods: ['GET'])]
-    public function index(AuthorRepository $authorRepository): Response
+    public function index(AuthorsDataTable $table): Response
     {
         return $this->render('author/index.html.twig', [
-            'authors' => $authorRepository->findAll(),
+            'table' => $table,
         ]);
     }
 
