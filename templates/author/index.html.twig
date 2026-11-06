@@ -7,5 +7,6 @@
         {% block content %}
         {{ render_datatable(table, {'class': 'table table-striped'}) }}
         {% endblock %}
+        <a href="{{ path('app_author_new') }}">Create new</a>
     {% endembed %}
 {% endblock %}
