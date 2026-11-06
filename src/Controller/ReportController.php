@@ -16,8 +16,10 @@ final class ReportController extends AbstractController
     #[Route('/relatorios', name: 'app_report')]
     public function index(): Response
     {
+        $reportRepository = $this->reportRepository->groupBooksByAuthor();
+        
         return $this->render('report/index.html.twig', [
-            'controller_name' => 'ReportController',
+            'reports' =>$reportRepository
         ]);
     }
 }

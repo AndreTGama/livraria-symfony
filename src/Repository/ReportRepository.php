@@ -10,10 +10,21 @@ final class ReportRepository
     {
     }
 
-    public function booksByAuthor(): array
+    private function booksByAuthor(): array
     {
         return $this->connection->fetchAllAssociative(
             'SELECT * FROM vw_livros_por_autor ORDER BY autor_nome, titulo'
         );
+    }
+
+    public function groupBooksByAuthor(): array
+    {
+        $list = [];
+        $items = $this->booksByAuthor();
+
+        foreach($items as $item){
+            $list[$item['autor_codigo']][] = $item;
+        }
+        return $list;
     }
 }
