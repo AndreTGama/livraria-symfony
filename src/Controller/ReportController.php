@@ -13,7 +13,7 @@ final class ReportController extends AbstractController
     {
     }
 
-    #[Route('/relatorios', name: 'app_report')]
+    #[Route('/relatorios', name: 'app_report_index')]
     public function index(): Response
     {
         $reportRepository = $this->reportRepository->groupBooksByAuthor();
