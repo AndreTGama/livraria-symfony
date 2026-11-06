@@ -4,8 +4,11 @@
 
 {% block body %}
     {% include 'layout/_header.html.twig' %}
-    <main class="custom-container">
-        {%  include 'layout/_title.html.twig' with {'title': 'Livros', 'href': path('app_book_index')} %}
+    {% embed 'layout/_container.html.twig' with {
+        title: 'Livros',
+        href: path('app_book_index')
+    } %}
+        {% block content %}
         <section class="row mt-5">
             <aside class="col-lg-3 mb-4">
                 {% include 'layout/_filter.html.twig' with {
@@ -40,5 +43,6 @@
                 {% endif %}
             </div>
         </section>
-    </main>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

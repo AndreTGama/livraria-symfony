@@ -3,8 +3,8 @@
 {% block title %}Livro index{% endblock %}
 
 {% block body %}
-    <main class="custom-container">
-        {%  include 'layout/_title.html.twig' with {'title': 'Livros', 'href': ''} %}
+    {% embed 'layout/_container.html.twig' with {title: 'Livros'} %}
+        {% block content %}
 
         <table class="table">
             <thead>
@@ -47,5 +47,6 @@
         </table>
 
         <a href="{{ path('app_book_new') }}">Create new</a>
-    </main>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

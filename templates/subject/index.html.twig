@@ -3,8 +3,8 @@
 {% block title %}Subject index{% endblock %}
 
 {% block body %}
-    <main class="custom-container">
-        {%  include 'layout/_title.html.twig' with {'title': 'Relatório', 'href': ''} %}
+    {% embed 'layout/_container.html.twig' with {title: 'Relatório'} %}
+        {% block content %}
         <table class="table">
             <thead>
                 <tr>
@@ -32,5 +32,6 @@
         </table>
 
         <a href="{{ path('app_subject_new') }}">Create new</a>
-    </main>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

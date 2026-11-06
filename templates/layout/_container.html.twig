@@ -1,0 +1,8 @@
+<main class="custom-container">
+    {% include 'layout/_title.html.twig' with {
+        title: title,
+        href: href|default('')
+    } %}
+
+    {% block content %}{% endblock %}
+</main>

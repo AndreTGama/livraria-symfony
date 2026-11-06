@@ -3,9 +3,10 @@
 {% block title %}Relatório{% endblock %}
 
 {% block body %}
-    <main class="custom-container">
-        {% include 'layout/_title.html.twig' with {'title': 'Relatório', 'href': ''} %}
+    {% embed 'layout/_container.html.twig' with {title: 'Relatório'} %}
+        {% block content %}
         {% include 'report/button.html.twig' %}
         {% include 'report/_table.html.twig' %}
-    </main>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}
