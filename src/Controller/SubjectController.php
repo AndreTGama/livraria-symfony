@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Subject;
+use App\Exception\AssociatedSubjectException;
 use App\Form\SubjectType;
 use App\Repository\SubjectRepository;
+use App\Service\SubjectService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,6 +16,9 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/assuntos')]
 final class SubjectController extends AbstractController
 {
+    public function __construct(private SubjectService $subjectService) {}
+
+
     #[Route(name: 'app_subject_index', methods: ['GET'])]
     public function index(SubjectRepository $subjectRepository): Response
     {
@@ -69,11 +74,15 @@ final class SubjectController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_subject_delete', methods: ['POST'])]
-    public function delete(Request $request, Subject $subject, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Subject $subject): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$subject->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($subject);
-            $entityManager->flush();
+        if ($this->isCsrfTokenValid('delete' . $subject->getId(), $request->getPayload()->getString('_token'))) {
+            try {
+                $this->subjectService->delete($subject);
+                $this->addFlash('success', 'Assunto excluído com sucesso');
+            } catch (AssociatedSubjectException $e) {
+                $this->addFlash('warning', $e->getMessage());
+            }
         }
 
         return $this->redirectToRoute('app_subject_index', [], Response::HTTP_SEE_OTHER);

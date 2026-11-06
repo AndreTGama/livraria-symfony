@@ -88,4 +88,9 @@ class Subject
 
         return $this;
     }
+
+    public function hasBooks(): bool
+    {
+        return !$this->getBooks()->isEmpty();
+    }
 }
