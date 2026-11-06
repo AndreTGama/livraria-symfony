@@ -5,8 +5,7 @@
 {% block body %}
     {% embed 'layout/_container.html.twig' with {title: 'Autores'} %}
         {% block content %}
-            {{ include('author/_form.html.twig') }}
-            <custom-button href="{{ path('app_author_index') }}" variant="outline" >Voltar</custom-button>
+            {{ include('author/_form.html.twig', {back_href: path('app_author_index')}) }}
         {% endblock %}
     {% endembed %}
 {% endblock %}
