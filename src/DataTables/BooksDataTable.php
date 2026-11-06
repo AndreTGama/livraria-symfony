@@ -5,6 +5,7 @@ namespace App\DataTables;
 use App\Entity\Book;
 use App\Repository\BookRepository;
 use Pentiminax\UX\DataTables\Column\DateColumn;
+use Pentiminax\UX\DataTables\Column\MoneyColumn;
 use Pentiminax\UX\DataTables\Column\NumberColumn;
 use Pentiminax\UX\DataTables\Column\TextColumn;
 use Pentiminax\UX\DataTables\Enum\Icon;
@@ -13,7 +14,7 @@ use Pentiminax\UX\DataTables\Model\Action;
 use Pentiminax\UX\DataTables\Model\Actions;
 use Pentiminax\UX\DataTables\Model\DataTable;
 
-final class AuthorsDataTable extends AbstractDataTable
+final class BooksDataTable extends AbstractDataTable
 {
     public function __construct(private BookRepository $bookRepository) {}
 
@@ -22,6 +23,14 @@ final class AuthorsDataTable extends AbstractDataTable
         yield NumberColumn::new('id', 'ID');
         yield TextColumn::new('title', 'Título');
         yield TextColumn::new('publisher', 'Publicado');
+        yield NumberColumn::new('edition', 'Edição');
+        yield DateColumn::new('publicationYear', 'Ano da publicação')->setFormat('d/m/Y');
+        yield MoneyColumn::new('price', 'Preço')
+            ->currency('BRL')
+            ->storedAsCents(true)
+            ->decimals(2);
+        yield TextColumn::new('authors', 'Autores');
+        yield TextColumn::new('subjects', 'Assuntos');
         yield DateColumn::new('createdAt', 'Criado')->setFormat('d/m/Y h:i');
         yield DateColumn::new('updatedAt', 'Última atualização')->setFormat('d/m/Y h:i');
     }
@@ -63,6 +72,10 @@ final class AuthorsDataTable extends AbstractDataTable
             'publisher'         => $row->getPublisher(),
             'edition'           => $row->getEdition(),
             'publicationYear'   => $row->getPublicationYear(),
+            'price'             => $row->getPrice(),
+            'authors'           => implode(', ', $row->getAuthors()->map(fn($author) => $author->getName())->toArray()),
+            'subjects'          => implode(', ', $row->getSubjects()->map(fn($subject) => $subject->getDescription())->toArray()),
+            'createdAt'         => $row->getCreatedAt(),
             'updatedAt'         => $row->getUpdatedAt(),
         ];
     }

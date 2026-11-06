@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\DataTables\BooksDataTable;
 use App\Entity\Book;
 use App\Form\BookType;
 use App\Repository\BookRepository;
@@ -16,10 +17,10 @@ use Symfony\Component\Routing\Attribute\Route;
 final class BookController extends AbstractController
 {    
     #[Route(name: 'app_book_index', methods: ['GET'])]
-    public function index(BookRepository $bookRepository): Response
+    public function index(BooksDataTable $table): Response
     {
         return $this->render('book/index.html.twig', [
-            'books' => $bookRepository->findAll(),
+            'table' => $table,
         ]);
     }
 

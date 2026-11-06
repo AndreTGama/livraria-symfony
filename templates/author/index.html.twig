@@ -5,8 +5,8 @@
 {% block body %}
     {% embed 'layout/_container.html.twig' with {title: 'Autores'} %}
         {% block content %}
-        {{ render_datatable(table, {'class': 'table table-striped'}) }}
+            {{ render_datatable(table, {'class': 'table table-striped'}) }}
+            <a href="{{ path('app_author_new') }}">Create new</a>
         {% endblock %}
-        <a href="{{ path('app_author_new') }}">Create new</a>
     {% endembed %}
 {% endblock %}

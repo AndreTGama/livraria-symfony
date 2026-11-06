@@ -1,0 +1,2 @@
+Olhar esse problema antes de enviar:
+Fatal error: Maximum execution time of 30 seconds exceeded in C:\Users\andre\Documents\Projects\Symphony\livraria\vendor\symfony\error-handler\DebugClassLoader.php on line 342
