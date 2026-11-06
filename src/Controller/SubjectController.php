@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
+use App\DataTables\SubjectsDataTable;
 use App\Entity\Subject;
 use App\Exception\AssociatedSubjectException;
 use App\Form\SubjectType;
-use App\Repository\SubjectRepository;
 use App\Service\SubjectService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,10 +20,10 @@ final class SubjectController extends AbstractController
 
 
     #[Route(name: 'app_subject_index', methods: ['GET'])]
-    public function index(SubjectRepository $subjectRepository): Response
+    public function index(SubjectsDataTable $table): Response
     {
         return $this->render('subject/index.html.twig', [
-            'subjects' => $subjectRepository->findAll(),
+            'table' => $table,
         ]);
     }
 

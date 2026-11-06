@@ -21,6 +21,7 @@ final class AuthorsDataTable extends AbstractDataTable
     {
         yield NumberColumn::new('id', 'ID');
         yield TextColumn::new('name', 'Nome');
+        yield NumberColumn::new('books', 'Livros com esse tema');
         yield DateColumn::new('createdAt', 'Criado')->setFormat('d/m/Y h:i');
         yield DateColumn::new('updatedAt', 'Última atualização')->setFormat('d/m/Y h:i');
     }
@@ -57,8 +58,9 @@ final class AuthorsDataTable extends AbstractDataTable
     {
         /** @var Author $row */
         return [
-            'id' => $row->getId(),
-            'name' => $row->getName(),
+            'id'        => $row->getId(),
+            'name'      => $row->getName(),
+            'books'     => $row->getBooks()->count(),
             'createdAt' => $row->getCreatedAt(),
             'updatedAt' => $row->getUpdatedAt(),
         ];
