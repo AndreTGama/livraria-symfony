@@ -17,9 +17,9 @@ final class ReportController extends AbstractController
     public function index(): Response
     {
         $reportRepository = $this->reportRepository->groupBooksByAuthor();
-        
+
         return $this->render('report/index.html.twig', [
-            'reports' =>$reportRepository
+            'reports' => $reportRepository
         ]);
     }
 }
