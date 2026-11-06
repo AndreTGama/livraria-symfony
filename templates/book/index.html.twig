@@ -3,47 +3,49 @@
 {% block title %}Livro index{% endblock %}
 
 {% block body %}
-    <h1>Livro index</h1>
+    <main class="custom-container">
+        {%  include 'layout/_title.html.twig' with {'title': 'Livros', 'href': ''} %}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Titulo</th>
-                <th>Editora</th>
-                <th>Edicao</th>
-                <th>AnoPublicacao</th>
-                <th>Valor</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>DeletedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for book in books %}
-            <tr>
-                <td>{{ book.id }}</td>
-                <td>{{ book.title }}</td>
-                <td>{{ book.publisher }}</td>
-                <td>{{ book.edition }}</td>
-                <td>{{ book.publicationYear }}</td>
-                <td>{{ book.price }}</td>
-                <td>{{ book.createdAt ? book.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ book.updatedAt ? book.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ book.deletedAt ? book.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_book_show', {'id': book.id}) }}">show</a>
-                    <a href="{{ path('app_book_edit', {'id': book.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="10">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Titulo</th>
+                    <th>Editora</th>
+                    <th>Edicao</th>
+                    <th>AnoPublicacao</th>
+                    <th>Valor</th>
+                    <th>CreatedAt</th>
+                    <th>UpdatedAt</th>
+                    <th>DeletedAt</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for book in books %}
+                <tr>
+                    <td>{{ book.id }}</td>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.publisher }}</td>
+                    <td>{{ book.edition }}</td>
+                    <td>{{ book.publicationYear }}</td>
+                    <td>{{ book.price }}</td>
+                    <td>{{ book.createdAt ? book.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ book.updatedAt ? book.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ book.deletedAt ? book.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+                        <a href="{{ path('app_book_show', {'id': book.id}) }}">show</a>
+                        <a href="{{ path('app_book_edit', {'id': book.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="10">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <a href="{{ path('app_book_new') }}">Create new</a>
+        <a href="{{ path('app_book_new') }}">Create new</a>
+    </main>
 {% endblock %}

@@ -3,43 +3,45 @@
 {% block title %}Autor index{% endblock %}
 
 {% block body %}
-    <h1>Autor index</h1>
+    <main class="custom-container">
+        {%  include 'layout/_title.html.twig' with {'title': 'Autores', 'href': ''} %}
 
-    {% for message in app.flashes('warning') %}
-        <div role="alert">{{ message }}</div>
-    {% endfor %}
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nome</th>
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>DeletedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for author in authors %}
-            <tr>
-                <td>{{ author.id }}</td>
-                <td>{{ author.name }}</td>
-                <td>{{ author.createdAt ? author.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ author.updatedAt ? author.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ author.deletedAt ? author.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_author_show', {'id': author.id}) }}">show</a>
-                    <a href="{{ path('app_author_edit', {'id': author.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
+        {% for message in app.flashes('warning') %}
+            <div role="alert">{{ message }}</div>
         {% endfor %}
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_author_new') }}">Create new</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nome</th>
+                    <th>CreatedAt</th>
+                    <th>UpdatedAt</th>
+                    <th>DeletedAt</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for author in authors %}
+                <tr>
+                    <td>{{ author.id }}</td>
+                    <td>{{ author.name }}</td>
+                    <td>{{ author.createdAt ? author.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ author.updatedAt ? author.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ author.deletedAt ? author.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>
+                        <a href="{{ path('app_author_show', {'id': author.id}) }}">show</a>
+                        <a href="{{ path('app_author_edit', {'id': author.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('app_author_new') }}">Create new</a>
+    </main>
 {% endblock %}
