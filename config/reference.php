@@ -985,7 +985,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         enabled?: bool|Param, // Default: false
  *     },
  *     html?: bool|array{
- *         enabled?: bool|Param, // Default: false
+ *         enabled?: bool|Param, // Default: true
  *     },
  *     markdown?: bool|array{
  *         enabled?: bool|Param, // Default: false
@@ -1569,6 +1569,48 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         },
  *     }>,
  * }
+ * @psalm-type TwigComponentConfig = array{
+ *     defaults?: array<string, Param|string|array{ // Default: []
+ *         template_directory?: scalar|Param|null, // Default: "components"
+ *         name_prefix?: scalar|Param|null, // Default: ""
+ *     }>,
+ *     anonymous_template_directory?: scalar|Param|null, // Defaults to `components`
+ *     profiler?: bool|array{ // Enables the profiler for Twig Component
+ *         enabled?: bool|Param, // Default: "%kernel.debug%"
+ *         collect_components?: bool|Param, // Collect components instances // Default: true
+ *     },
+ * }
+ * @psalm-type LiveComponentConfig = array{
+ *     secret?: scalar|Param|null, // The secret used to compute fingerprints and checksums // Default: "%kernel.secret%"
+ *     fetch_credentials?: "same-origin"|"include"|"omit"|Param, // The default fetch credentials mode for all Live Components ('same-origin', 'include', 'omit') // Default: "same-origin"
+ * }
+ * @psalm-type SweetAlertConfig = array{
+ *     auto_convert_flash_messages?: scalar|Param|null, // Default: false
+ *     defaults?: array{
+ *         position?: "bottom"|"bottom-end"|"bottom-start"|"center"|"center-end"|"center-start"|"top"|"top-end"|"top-start"|Param, // Default: "center"
+ *         confirmButtonColor?: scalar|Param|null, // Default: null
+ *         cancelButtonColor?: scalar|Param|null, // Default: null
+ *         denyButtonColor?: scalar|Param|null, // Default: null
+ *         confirmButtonText?: scalar|Param|null, // Default: "OK"
+ *         cancelButtonText?: scalar|Param|null, // Default: "Cancel"
+ *         denyButtonText?: scalar|Param|null, // Default: "No"
+ *         showConfirmButton?: bool|Param, // Default: true
+ *         showCancelButton?: bool|Param, // Default: false
+ *         showDenyButton?: bool|Param, // Default: false
+ *         reverseButtons?: bool|Param, // Default: false
+ *         animation?: bool|Param, // Default: true
+ *         backdrop?: bool|Param, // Default: true
+ *         allowOutsideClick?: bool|Param, // Default: true
+ *         allowEscapeKey?: bool|Param, // Default: true
+ *         focusConfirm?: bool|Param, // Default: true
+ *         draggable?: bool|Param, // Default: false
+ *         topLayer?: bool|Param, // Default: false
+ *         timer?: int|Param, // Default: null
+ *         timerProgressBar?: bool|Param, // Default: false
+ *         theme?: "light"|"dark"|"auto"|"borderless"|"bootstrap-4"|"bootstrap-4-light"|"bootstrap-4-dark"|"bootstrap-5"|"bootstrap-5-light"|"bootstrap-5-dark"|"material-ui"|"material-ui-light"|"material-ui-dark"|"bulma"|"bulma-light"|"bulma-dark"|"minimal"|"embed-iframe"|Param, // Default: "auto"
+ *         customClass?: list<scalar|Param|null>,
+ *     },
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -1584,6 +1626,9 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     monolog?: MonologConfig,
  *     stof_doctrine_extensions?: StofDoctrineExtensionsConfig,
  *     ux_pagination?: UxPaginationConfig,
+ *     twig_component?: TwigComponentConfig,
+ *     live_component?: LiveComponentConfig,
+ *     sweet_alert?: SweetAlertConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -1602,6 +1647,9 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         maker?: MakerConfig,
  *         stof_doctrine_extensions?: StofDoctrineExtensionsConfig,
  *         ux_pagination?: UxPaginationConfig,
+ *         twig_component?: TwigComponentConfig,
+ *         live_component?: LiveComponentConfig,
+ *         sweet_alert?: SweetAlertConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -1618,6 +1666,9 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         monolog?: MonologConfig,
  *         stof_doctrine_extensions?: StofDoctrineExtensionsConfig,
  *         ux_pagination?: UxPaginationConfig,
+ *         twig_component?: TwigComponentConfig,
+ *         live_component?: LiveComponentConfig,
+ *         sweet_alert?: SweetAlertConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -1635,6 +1686,9 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         monolog?: MonologConfig,
  *         stof_doctrine_extensions?: StofDoctrineExtensionsConfig,
  *         ux_pagination?: UxPaginationConfig,
+ *         twig_component?: TwigComponentConfig,
+ *         live_component?: LiveComponentConfig,
+ *         sweet_alert?: SweetAlertConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,
