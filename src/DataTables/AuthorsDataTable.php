@@ -32,13 +32,13 @@ final class AuthorsDataTable extends AbstractDataTable
             ->setColumnLabel('Ações')
             ->add(
                 Action::edit('Editar')
-                    ->setClassName('btn btn-sm btn-warning')
+                    ->setClassName('button-custom')
                     ->icon(Icon::Pencil)
                     ->linkToRoute('app_author_edit', fn(Author $author): array => ['id' => $author->getId()])
             )
             ->add(
                 Action::detail('Visualizar')
-                    ->setClassName('btn btn-sm btn-info')
+                    ->setClassName('button-custom')
                     ->icon(Icon::Eye)
                     ->linkToRoute('app_author_show', fn(Author $author): array => ['id' => $author->getId()])
             );

@@ -1,12 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Livro index{% endblock %}
+{% block title %}Livros | lista{% endblock %}
 
 {% block body %}
     {% embed 'layout/_container.html.twig' with {title: 'Livros'} %}
         {% block content %}
+            <div class="d-flex flex-row-reverse">
+                <custom-button href="{{ path('app_book_new') }}">+ Livos</custom-button>
+            </div>
             {{ render_datatable(table, {'class': 'table table-striped'}) }}
-            <a href="{{ path('app_book_new') }}">Create new</a>
         {% endblock %}
     {% endembed %}
 {% endblock %}

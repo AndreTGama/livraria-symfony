@@ -41,7 +41,7 @@ final class BooksDataTable extends AbstractDataTable
             ->setColumnLabel('Ações')
             ->add(
                 Action::edit('Editar')
-                    ->setClassName('btn btn-sm btn-warning')
+                    ->setClassName('button-custom')
                     ->icon(Icon::Pencil)
                     ->linkToRoute('app_book_edit', fn(Book $book): array => ['id' => $book->getId()])
             )

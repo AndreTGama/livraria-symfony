@@ -1,12 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Subject index{% endblock %}
+{% block title %}Assuntos | lista{% endblock %}
 
 {% block body %}
     {% embed 'layout/_container.html.twig' with {title: 'Relatório'} %}
         {% block content %}
+            <div class="d-flex flex-row-reverse">
+                <custom-button href="{{ path('app_subject_new') }}">+ Assunto</custom-button>
+            </div>
             {{ render_datatable(table, {'class': 'table table-striped'}) }}
-            <a href="{{ path('app_subject_new') }}">Create new</a>
         {% endblock %}
     {% endembed %}
 {% endblock %}

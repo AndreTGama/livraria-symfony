@@ -33,7 +33,7 @@ final class SubjectsDataTable extends AbstractDataTable
             ->setColumnLabel('Ações')
             ->add(
                 Action::edit('Editar')
-                    ->setClassName('btn btn-sm btn-warning')
+                    ->setClassName('button-custom')
                     ->icon(Icon::Pencil)
                     ->linkToRoute('app_subject_edit', fn(Subject $subject): array => ['id' => $subject->getId()])
             )

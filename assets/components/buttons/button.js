@@ -13,7 +13,7 @@ template.innerHTML = `
 
     .btn-grad {
         background-image: linear-gradient(to right, var(--blue-color) 0%, var(--purple-color) 51%, var(--dark-purple-color) 100%);
-        padding: 15px 45px;
+        padding: 10px 20px;
         text-align: center;
         transition: 0.5s;
         background-size: 200% auto;
@@ -22,7 +22,7 @@ template.innerHTML = `
         border-radius: 10px;
         display: block;
         border: none;
-        width: 200px;
+        width: auto;
         text-decoration: none;
     }
 

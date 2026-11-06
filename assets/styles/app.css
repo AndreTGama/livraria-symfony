@@ -121,3 +121,27 @@ body {
     }
   }
 }
+
+/* Buttons */
+.button-custom {
+  display: inline-block;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  text-decoration: none;
+  position: relative;
+  color: #000;
+  background: transparent;
+  border-radius: 5px;
+  padding: 5px;
+  box-shadow: var(--purple-color) -2px -2px 0px 2px, var(--blue-color) 0px 0px 0px 4px, rgba(0, 0, 0, 0.05) 0px 0px 2px 7px;
+  transition: all 0.2s;
+  margin: 5px;
+}
+
+.button-custom:hover {
+  box-shadow: var(--blue-color) -2px -2px 0px 2px, var(--purple-color) 0px 0px 0px 4px, rgba(0, 0, 0, 0.05) 0px 0px 2px 7px;
+  transform: scale(1.01);
+  font-weight: 600;
+
+}

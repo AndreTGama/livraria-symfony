@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Autor{% endblock %}
+{% block title %}Autores | Novo{% endblock %}
 
 {% block body %}
-    <h1>Create new Autor</h1>
-
-    {{ include('author/_form.html.twig') }}
-
-    <a href="{{ path('app_author_index') }}">back to list</a>
+    {% embed 'layout/_container.html.twig' with {title: 'Autores'} %}
+        {% block content %}
+            {{ include('author/_form.html.twig') }}
+            <custom-button href="{{ path('app_author_index') }}" variant="outline" >Voltar</custom-button>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}
