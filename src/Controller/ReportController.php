@@ -25,6 +25,7 @@ final class ReportController extends AbstractController
     #[Route('/relatorios/pdf', name: 'app_report_pdf')]
     public function reportPdf(): Response
     {
+        ini_set('memory_limit', '1024M');
         $html = $this->renderView('report/pdf.html.twig', [
             'reports' => $this->reportRepository->groupBooksByAuthor(),
         ]);
