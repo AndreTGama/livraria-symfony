@@ -44,7 +44,7 @@ template.innerHTML = `
 
 class CustomButton extends HTMLElement {
     static formAssociated = true;
-    static observedAttributes = ["href", "type"];
+    static observedAttributes = ["href", "type", "target"];
 
     constructor() {
         super();
@@ -90,10 +90,18 @@ class CustomButton extends HTMLElement {
     #update() {
         if (this.#isSubmit()) {
             this.link.removeAttribute("href");
+            this.link.removeAttribute("target");
             this.link.setAttribute("role", "button");
             this.link.setAttribute("tabindex", "0");
         } else {
             this.link.setAttribute("href", this.getAttribute("href") ?? "#");
+            
+            const target = this.getAttribute("target");
+            if (target) {
+                this.link.setAttribute("target", target);
+            } else {
+                this.link.removeAttribute("target");
+            }
             this.link.removeAttribute("role");
             this.link.removeAttribute("tabindex");
         }

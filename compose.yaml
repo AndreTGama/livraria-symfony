@@ -9,7 +9,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
       MYSQL_USER: ${MYSQL_USER:-root}
     ports:
-    ###> Port changed to 3307 to avoid conflict with local MySQL installation
+    # Port changed to 3307 to avoid conflict with local MySQL installation
       - "3307:3306" 
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "${MYSQL_USER:-root}", "-p${MYSQL_PASSWORD:-root}"]
