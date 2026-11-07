@@ -5,8 +5,17 @@
 {% block body %}
     {% embed 'layout/_container.html.twig' with {title: 'Relatório'} %}
         {% block content %}
-        {% include 'report/button.html.twig' %}
-        {% include 'report/_table.html.twig' %}
+            {% include 'report/_filter.html.twig' %}
+            {% include 'report/button.html.twig' %}
+            <p class="text-muted" role="status">
+                {{ total }} {{ total == 1 ? 'registro encontrado' : 'registros encontrados' }}
+            </p>
+            {% if reports is empty %}
+                <div class="alert alert-info" role="status">Nenhum registro encontrado com os filtros selecionados.</div>
+            {% else %}
+                {% include 'report/_table.html.twig' %}
+                {% include 'report/_pagination.html.twig' with {page: page, totalPages: totalPages, } %}
+            {% endif %}
         {% endblock %}
     {% endembed %}
 {% endblock %}

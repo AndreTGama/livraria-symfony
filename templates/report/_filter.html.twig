@@ -1,0 +1,109 @@
+<form action="{{ path('app_report_index') }}" method="get" class="card mb-4">
+    <div class="card-body">
+        <div class="row g-3 align-items-end">
+            <div class="col-lg-4">
+                <label for="report-search" class="form-label"><b>Título ou editora</b></label>
+                <input
+                    id="report-search"
+                    name="q"
+                    type="search"
+                    class="form-control"
+                    value="{{ search }}"
+                    placeholder="Buscar livros"
+                >
+            </div>
+
+            <div class="col-lg-4">
+                <label for="report-authors-search" class="form-label"><b>Autores</b></label>
+                {% if authors is not empty %}
+                    <details class="authors-select" data-controller="authors-filter">
+                        <summary class="form-select">
+                            Selecionar autores
+                            <span class="badge text-bg-primary" data-authors-filter-target="count" hidden></span>
+                        </summary>
+                        <div class="authors-select-menu">
+                            <input
+                                id="report-authors-search"
+                                type="search"
+                                class="form-control form-control-sm mb-2"
+                                placeholder="Buscar autor..."
+                                aria-label="Buscar autor"
+                                data-authors-filter-target="search"
+                                data-action="input->authors-filter#filter"
+                            >
+                            <div class="authors-select-options">
+                                {% for author in authors %}
+                                    <label class="form-check authors-select-option" data-authors-filter-target="option">
+                                        <input
+                                            type="checkbox"
+                                            class="form-check-input"
+                                            name="authors[]"
+                                            value="{{ author.id }}"
+                                            {{ author.id in selectedAuthorIds ? 'checked' : '' }}
+                                            data-authors-filter-target="checkbox"
+                                            data-action="change->authors-filter#updateCount"
+                                        />
+                                        <span class="form-check-label">{{ author.name }}</span>
+                                    </label>
+                                {% endfor %}
+                            </div>
+                            <p class="small text-muted mb-0" data-authors-filter-target="empty" hidden>
+                                Nenhum autor encontrado.
+                            </p>
+                        </div>
+                    </details>
+                {% else %}
+                    <p class="text-muted small mb-0">Nenhum autor cadastrado.</p>
+                {% endif %}
+            </div>
+
+            <div class="col-lg-4">
+                <label for="report-subjects-search" class="form-label"><b>Assuntos</b></label>
+                {% if subjects is not empty %}
+                    <details class="authors-select" data-controller="authors-filter">
+                        <summary class="form-select">
+                            Selecionar assuntos
+                            <span class="badge text-bg-primary" data-authors-filter-target="count" hidden></span>
+                        </summary>
+                        <div class="authors-select-menu">
+                            <input
+                                id="report-subjects-search"
+                                type="search"
+                                class="form-control form-control-sm mb-2"
+                                placeholder="Buscar assunto..."
+                                aria-label="Buscar assunto"
+                                data-authors-filter-target="search"
+                                data-action="input->authors-filter#filter"
+                            >
+                            <div class="authors-select-options">
+                                {% for subject in subjects %}
+                                    <label class="form-check authors-select-option" data-authors-filter-target="option">
+                                        <input
+                                            type="checkbox"
+                                            class="form-check-input"
+                                            name="subjects[]"
+                                            value="{{ subject.id }}"
+                                            {{ subject.id in selectedSubjectIds ? 'checked' : '' }}
+                                            data-authors-filter-target="checkbox"
+                                            data-action="change->authors-filter#updateCount"
+                                        />
+                                        <span class="form-check-label">{{ subject.description }}</span>
+                                    </label>
+                                {% endfor %}
+                            </div>
+                            <p class="small text-muted mb-0" data-authors-filter-target="empty" hidden>
+                                Nenhum assunto encontrado.
+                            </p>
+                        </div>
+                    </details>
+                {% else %}
+                    <p class="text-muted small mb-0">Nenhum assunto cadastrado.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="card-footer d-flex gap-2">
+        <custom-button type="submit">Filtrar</custom-button>
+        <custom-button href="{{ path('app_report_index') }}" variant="outline">Limpar filtros</custom-button>
+    </div>
+</form>

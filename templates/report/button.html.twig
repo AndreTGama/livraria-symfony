@@ -1,3 +1,4 @@
-<div class="d-flex flex-row-reverse bd-highlight mb-5">
-    <custom-button href="/relatorios/pdf" target="_blank">Download PDF</custom-button>
+<div class="d-flex flex-row-reverse gap-2 mb-4">
+    <custom-button href="{{ path('app_report_csv', app.request.query.all) }}">Exportar planilha</custom-button>
+    <custom-button href="{{ path('app_report_pdf', app.request.query.all) }}" target="_blank" variant="outline">Download PDF</custom-button>
 </div>
