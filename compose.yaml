@@ -40,6 +40,7 @@ services:
     build: .
     volumes:
       - ./:/var/www/html
+      - var_data:/var/www/html/var
     environment:
       DATABASE_URL: mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@database:3306/${MYSQL_DATABASE}?serverVersion=8.0
       REDIS_URL: redis://redis:6379
@@ -60,6 +61,5 @@ services:
 
 
 volumes:
-###> doctrine/doctrine-bundle ###
   database_data:
-###< doctrine/doctrine-bundle ###
+  var_data:
