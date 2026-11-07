@@ -5,36 +5,35 @@
 {% block body %}
     {% embed 'layout/_container.html.twig' with {title: 'Autores'} %}
         {% block content %}
-
-            <table class="table">
-                <tbody>
-                    <tr>
-                        <th>Id</th>
-                        <td>{{ author.id }}</td>
-                    </tr>
-                    <tr>
-                        <th>Nome</th>
-                        <td>{{ author.name }}</td>
-                    </tr>
-                    <tr>
-                        <th>CreatedAt</th>
-                        <td>{{ author.createdAt ? author.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                    </tr>
-                    <tr>
-                        <th>UpdatedAt</th>
-                        <td>{{ author.updatedAt ? author.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                    </tr>
-                    <tr>
-                        <th>DeletedAt</th>
-                        <td>{{ author.deletedAt ? author.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="card mb-2">
+                <div class="card-header">
+                    # {{ author.id }}
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ author.name }}</h5>
+                </div>
+                <div class="card-footer">
+                    {% set bookCount = author.books|length %}
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <strong>Livros Publicados</strong>
+                        <small class="text-muted">
+                            {{ bookCount }} {{ bookCount == 1 ? 'livro' : 'livros' }}
+                        </small>
+                    </div>
+                    {% if bookCount > 0 %}
+                        <div class="row row-cols-1 row-cols-md-2 g-2">
+                            {% for book in author.books %}
+                                <div class="col">{{ book.title }}</div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <span>Nenhum livro publicado.</span>
+                    {% endif %}
+                </div>
+            </div>
             <custom-button href="{{ path('app_author_edit', {'id': author.id}) }}">Editar</custom-button>
             <custom-button href="{{ path('app_author_index') }}" variant="outline">Voltar</custom-button>
             {{ include('author/_delete_form.html.twig') }}
         {% endblock %}
-
     {% endembed %}
-
 {% endblock %}

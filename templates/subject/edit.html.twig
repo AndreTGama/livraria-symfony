@@ -5,8 +5,12 @@
 {% block body %}
     {% embed 'layout/_container.html.twig' with {title: 'Assunto'} %}
         {% block content %}
-            {{ include('subject/_form.html.twig', {'button_label': 'Atualizar', back_href: path('app_subject_index')}) }}
-            {{ include('subject/_delete_form.html.twig') }}
+        <div class="card">
+            <div class="card-body">
+                {{ include('subject/_form.html.twig', {'button_label': 'Atualizar', back_href: path('app_subject_index')}) }}
+                {{ include('subject/_delete_form.html.twig') }}
+            </div>
+        </div>
         {% endblock %}
     {% endembed %}
 {% endblock %}

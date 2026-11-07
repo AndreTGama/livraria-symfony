@@ -1,13 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Livro{% endblock %}
+{% block title %}Livros | Editar{% endblock %}
 
 {% block body %}
-    <h1>Edit Livro</h1>
-
-    {{ include('book/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_book_index') }}">back to list</a>
-
-    {{ include('book/_delete_form.html.twig') }}
+    {% embed 'layout/_container.html.twig' with {title: 'Livros'} %}
+        {% block content %}
+            <div class="card">
+                <div class="card-body">
+                    {{ include('book/_form.html.twig', {'button_label': 'Update', back_href: path('app_book_index')}) }}
+                    {{ include('book/_delete_form.html.twig') }}
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}
