@@ -7,7 +7,7 @@
 
 body {
   margin: 0;
-  background-color: skyblue;
+  background-color: rgb(246, 254, 255) !important;
   font-family: system-ui, -apple-system, sans-serif;
 }
 
