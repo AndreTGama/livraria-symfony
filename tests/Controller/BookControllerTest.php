@@ -2,7 +2,9 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\Author;
 use App\Entity\Book;
+use App\Entity\Subject;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
@@ -14,6 +16,8 @@ final class BookControllerTest extends WebTestCase
     private EntityManagerInterface $manager;
     /** @var EntityRepository<Book> $bookRepository */
     private EntityRepository $bookRepository;
+    private Author $author;
+    private Subject $subject;
     private string $path = '/livros/';
 
     protected function setUp(): void
@@ -27,6 +31,15 @@ final class BookControllerTest extends WebTestCase
         }
 
         $this->manager->flush();
+
+        $this->author = new Author();
+        $this->author->setName('Test Author');
+        $this->subject = new Subject();
+        $this->subject->setDescription('Testing');
+
+        $this->manager->persist($this->author);
+        $this->manager->persist($this->subject);
+        $this->manager->flush();
     }
 
     public function testIndex(): void
@@ -35,24 +48,27 @@ final class BookControllerTest extends WebTestCase
         $this->client->request('GET', $this->path);
 
         self::assertResponseStatusCodeSame(200);
-        self::assertPageTitleContains('Livro index');
+        self::assertPageTitleContains('Livros | lista');
     }
 
     public function testNew(): void
     {
-        $this->client->request('GET', sprintf('%snew', $this->path));
+        $request = $this->client->request('GET', sprintf('%snew', $this->path));
 
         self::assertResponseStatusCodeSame(200);
 
-        $this->client->submitForm('Save', [
+        $form = $request->filter('form')->form([
             'book[title]' => 'Testing',
             'book[publisher]' => 'Testing',
             'book[edition]' => 1,
             'book[publicationYear]' => 2026,
             'book[price]' => '9.99',
+            'book[authors]' => [$this->author->getId()],
+            'book[subjects]' => [$this->subject->getId()],
         ]);
+        $this->client->submit($form);
 
-        self::assertResponseRedirects('/book');
+        self::assertResponseRedirects('/livros');
 
         self::assertSame(1, $this->bookRepository->count([]));
     }
@@ -83,21 +99,23 @@ final class BookControllerTest extends WebTestCase
         $fixture->setEdition(1);
         $fixture->setPublicationYear(2026);
         $fixture->setPrice('9.99');
+        $fixture->addAuthor($this->author);
+        $fixture->addSubject($this->subject);
 
         $this->manager->persist($fixture);
         $this->manager->flush();
 
-        $this->client->request('GET', sprintf('%s%s/edit', $this->path, $fixture->getId()));
-
-        $this->client->submitForm('Update', [
+        $request = $this->client->request('GET', sprintf('%s%s/edit', $this->path, $fixture->getId()));
+        $form = $request->filter('form')->first()->form([
             'book[title]' => 'Something New',
             'book[publisher]' => 'Something New',
             'book[edition]' => 2,
             'book[publicationYear]' => 2027,
             'book[price]' => '10.99',
         ]);
+        $this->client->submit($form);
 
-        self::assertResponseRedirects('/book');
+        self::assertResponseRedirects('/livros');
 
         $fixture = $this->bookRepository->findAll();
 
@@ -120,10 +138,11 @@ final class BookControllerTest extends WebTestCase
         $this->manager->persist($fixture);
         $this->manager->flush();
 
-        $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getId()));
-        $this->client->submitForm('Delete');
+        $request = $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getId()));
+        $form = $request->filter('form')->form();
+        $this->client->submit($form);
 
-        self::assertResponseRedirects('/book');
+        self::assertResponseRedirects('/livros');
         self::assertSame(0, $this->bookRepository->count([]));
     }
 }
