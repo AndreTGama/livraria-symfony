@@ -14,7 +14,7 @@ final class SubjectControllerTest extends WebTestCase
     private EntityManagerInterface $manager;
     /** @var EntityRepository<Subject> $subjectRepository */
     private EntityRepository $subjectRepository;
-    private string $path = '/subject/';
+    private string $path = '/assuntos/';
 
     protected function setUp(): void
     {

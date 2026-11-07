@@ -14,7 +14,7 @@ final class BookControllerTest extends WebTestCase
     private EntityManagerInterface $manager;
     /** @var EntityRepository<Book> $bookRepository */
     private EntityRepository $bookRepository;
-    private string $path = '/book/';
+    private string $path = '/livros/';
 
     protected function setUp(): void
     {

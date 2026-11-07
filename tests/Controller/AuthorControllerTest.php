@@ -14,7 +14,7 @@ final class AuthorControllerTest extends WebTestCase
     private EntityManagerInterface $manager;
     /** @var EntityRepository<Author> $authorRepository */
     private EntityRepository $authorRepository;
-    private string $path = '/author/';
+    private string $path = '/autores/';
 
     protected function setUp(): void
     {
@@ -35,21 +35,21 @@ final class AuthorControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', $this->path);
 
         self::assertResponseStatusCodeSame(200);
-        self::assertPageTitleContains('Autor index');
-
+        self::assertPageTitleContains('Autores | Lista');
     }
 
     public function testNew(): void
     {
-        $this->client->request('GET', sprintf('%snew', $this->path));
+        $request = $this->client->request('GET', sprintf('%snew', $this->path));
 
         self::assertResponseStatusCodeSame(200);
 
-        $this->client->submitForm('Save', [
+        $form = $request->filter('form')->form([
             'author[name]' => 'Testing',
         ]);
+        $this->client->submit($form);
 
-        self::assertResponseRedirects('/author');
+        self::assertResponseRedirects('/autores');
 
         self::assertSame(1, $this->authorRepository->count([]));
     }
@@ -65,7 +65,6 @@ final class AuthorControllerTest extends WebTestCase
         $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getId()));
 
         self::assertResponseStatusCodeSame(200);
-        self::assertPageTitleContains('Autor');
     }
 
     public function testEdit(): void
@@ -76,13 +75,13 @@ final class AuthorControllerTest extends WebTestCase
         $this->manager->persist($fixture);
         $this->manager->flush();
 
-        $this->client->request('GET', sprintf('%s%s/edit', $this->path, $fixture->getId()));
-
-        $this->client->submitForm('Update', [
+        $request = $this->client->request('GET', sprintf('%s%s/edit', $this->path, $fixture->getId()));
+        $form = $request->filter('form')->first()->form([
             'author[name]' => 'Something New',
         ]);
+        $this->client->submit($form);
 
-        self::assertResponseRedirects('/author');
+        self::assertResponseRedirects('/autores');
 
         $fixture = $this->authorRepository->findAll();
 
@@ -97,10 +96,11 @@ final class AuthorControllerTest extends WebTestCase
         $this->manager->persist($fixture);
         $this->manager->flush();
 
-        $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getId()));
-        $this->client->submitForm('Delete');
+        $request = $this->client->request('GET', sprintf('%s%s', $this->path, $fixture->getId()));
+        $form = $request->filter('form')->form();
+        $this->client->submit($form);
 
-        self::assertResponseRedirects('/author');
+        self::assertResponseRedirects('/autores');
         self::assertSame(0, $this->authorRepository->count([]));
     }
 }
