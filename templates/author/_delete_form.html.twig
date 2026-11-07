@@ -6,5 +6,5 @@
     data-confirm-message-value="Deseja excluir o autor {{ author.name }}?"
 >
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ author.id) }}">
-    <button class="btn">Delete</button>
+    <custom-button type="submit" class="mt-2" variant="outline">Delete</custom-button>
 </form>

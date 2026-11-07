@@ -79,15 +79,21 @@ final class AuthorController extends AbstractController
     #[Route('/{id}', name: 'app_author_delete', methods: ['POST'])]
     public function delete(Request $request, Author $author): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $author->getId(), $request->getPayload()->getString('_token'))) {
-            try {
-                $this->authorService->delete($author);
-                $this->addFlash('success', 'Autor excluído com sucesso');
-            } catch (AssociatedAuthorException $exception) {
-                $this->addFlash('danger', $exception->getMessage());
-            }
-        }
+        $form = $this->createForm(AuthorType::class, $author);
+        $form->handleRequest($request);
+        try {
+            $this->authorService->delete($author);
+            $this->addFlash('success', 'Autor excluído com sucesso');
 
-        return $this->redirectToRoute('app_author_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_author_index', [], Response::HTTP_SEE_OTHER);
+        } catch (AssociatedAuthorException $exception) {
+            $this->addFlash('danger', $exception->getMessage());
+
+            return $this->redirectToRoute(
+                'app_author_edit',
+                ['id' => $author->getId()],
+                Response::HTTP_SEE_OTHER
+            );
+        }
     }
 }
