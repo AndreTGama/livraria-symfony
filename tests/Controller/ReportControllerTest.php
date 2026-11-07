@@ -13,6 +13,6 @@ final class ReportControllerTest extends WebTestCase
 
         self::assertResponseIsSuccessful();
         self::assertSelectorExists('form[action="/relatorios"]');
-        self::assertSelectorTextContains('custom-button', 'Exportar planilha');
+        self::assertSelectorTextContains('custom-button[href="/relatorios/planilha"]', 'Exportar planilha');
     }
 }
