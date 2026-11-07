@@ -6,9 +6,13 @@
     {% embed 'layout/_container.html.twig' with {title: 'Livros'} %}
         {% block content %}
             <div class="d-flex flex-row-reverse">
-                <custom-button href="{{ path('app_book_new') }}">+ Livos</custom-button>
+                <custom-button href="{{ path('app_book_new') }}" class="mb-2">+ Livos</custom-button>
             </div>
-            {{ render_datatable(table, {'class': 'table table-striped'}) }}
+            <div class="card">
+                <div class="car-body p-1">
+                    {{ render_datatable(table, {'class': 'table table-striped'}) }}
+                </div>
+            </div>
         {% endblock %}
     {% endembed %}
 {% endblock %}

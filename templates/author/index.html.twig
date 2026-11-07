@@ -6,9 +6,13 @@
     {% embed 'layout/_container.html.twig' with {title: 'Autores'} %}
         {% block content %}
             <div class="d-flex flex-row-reverse">
-                <custom-button href="{{ path('app_author_new') }}">+ Autores</custom-button>
+                <custom-button href="{{ path('app_author_new') }}" class="mb-2">+ Autores</custom-button>
             </div>
-            {{ render_datatable(table, {'class': 'table table-striped'}) }}
+            <div class="card">
+                <div class="car-body p-1">
+                    {{ render_datatable(table, {'class': 'table table-striped'}) }}
+                </div>
+            </div>
         {% endblock %}
     {% endembed %}
 {% endblock %}
