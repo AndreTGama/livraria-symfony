@@ -24,7 +24,7 @@ class Author
     #[ORM\Column(name: 'CodAu')]
     private ?int $id = null;
 
-    #[Assert\NotBlank]
+    #[Assert\NotBlank(message: 'O nome do autor não pode ficar vazio.')]
     #[Assert\Length(max: 40)]
     #[ORM\Column(name: 'Nome', length: 40)]
     private ?string $name = null;

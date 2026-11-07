@@ -6,7 +6,6 @@ use App\DataTables\AuthorsDataTable;
 use App\Entity\Author;
 use App\Exception\AssociatedAuthorException;
 use App\Form\AuthorType;
-use App\Repository\AuthorRepository;
 use App\Service\AuthorService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,9 +16,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/autores')]
 final class AuthorController extends AbstractController
 {
-    public function __construct(private AuthorService $authorService)
-    {
-    }
+    public function __construct(private AuthorService $authorService) {}
 
     #[Route(name: 'app_author_index', methods: ['GET'])]
     public function index(AuthorsDataTable $table): Response
@@ -41,6 +38,10 @@ final class AuthorController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('app_author_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        if ($form->isSubmitted()) {
+            $this->addFlash('danger', 'Não foi possível cadastrar o autor. Verifique os dados informados.');
         }
 
         return $this->render('author/new.html.twig', [
@@ -78,12 +79,12 @@ final class AuthorController extends AbstractController
     #[Route('/{id}', name: 'app_author_delete', methods: ['POST'])]
     public function delete(Request $request, Author $author): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$author->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $author->getId(), $request->getPayload()->getString('_token'))) {
             try {
                 $this->authorService->delete($author);
                 $this->addFlash('success', 'Autor excluído com sucesso');
             } catch (AssociatedAuthorException $exception) {
-                $this->addFlash('warning', $exception->getMessage());
+                $this->addFlash('danger', $exception->getMessage());
             }
         }
 

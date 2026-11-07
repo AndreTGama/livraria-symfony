@@ -1,7 +1,7 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
     <div class="d-flex align-items-center gap-2">
-        <custom-button>{{ button_label|default('Save') }}</custom-button>
+        <custom-button type="submit">{{ button_label|default('Save') }}</custom-button>
         <custom-button href="{{ back_href }}" variant="outline">Voltar</custom-button>
     </div>
 {{ form_end(form) }}
