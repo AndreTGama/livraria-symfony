@@ -30,6 +30,7 @@ template.innerHTML = `
         background-position: right center;
         color: #fff;
         text-decoration: none;
+        box-shadow: 0px 0px 15px 1px var(--purple-color);
     }
 
     .btn-grad:focus-visible {

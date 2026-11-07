@@ -18,9 +18,7 @@
 
         <div class="mt-auto d-flex justify-content-between align-items-center">
             <span class="fw-semibold">R$ {{ book.price|number_format(2, ',', '.') }}</span>
-            <a href="{{ path('app_book_show', {id: book.id}) }}" class="btn btn-sm btn-outline-primary">
-                Ver livro
-            </a>
+            <custom-button href="{{ path('app_book_show', {id: book.id}) }}">Ver livro</custom-button>
         </div>
     </div>
 </article>

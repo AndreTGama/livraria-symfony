@@ -1,59 +1,90 @@
 <form action="{{ path('app_home') }}" method="get" class="catalog-filter">
-    <h3>Filtrar livros</h3>
-
-    <div class="mb-3">
-        <label for="catalog-search" class="form-label"><b>Título ou editora</b></label>
-        <input
-            id="catalog-search"
-            name="q"
-            type="search"
-            class="form-control"
-            value="{{ search }}"
-            placeholder="Buscar livros"
-        >
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label d-block"><b>Assuntos</b></label>
-        {% for item in subjects %}
-            <div class="form-check">
+    <div class="card">
+        <div class="card-body">
+        
+            <h3>Filtrar livros</h3>
+            <hr/>
+            <div class="mb-3">
+                <label for="catalog-search" class="form-label"><b>Título ou editora</b></label>
                 <input
-                    type="checkbox"
-                    class="form-check-input"
-                    name="subjects[]"
-                    id="subject-{{ item.id }}"
-                    value="{{ item.id }}"
-                    {{ item.id in selectedSubjectIds ? 'checked' : '' }}
-                />
-                <label class="form-check-label" for="subject-{{ item.id }}">
-                    {{ item.description }}
-                </label>
+                    id="catalog-search"
+                    name="q"
+                    type="search"
+                    class="form-control"
+                    value="{{ search }}"
+                    placeholder="Buscar livros"
+                >
             </div>
-        {% else %}
-            <p class="text-muted small mb-0">Nenhum assunto cadastrado.</p>
-        {% endfor %}
-    </div>
 
-    <div class="mb-3">
-        <label class="form-label d-block"><b>Autores</b></label>
-        {% for author in authors %}
-            <div class="form-check">
-                <input
-                    type="checkbox"
-                    class="form-check-input"
-                    name="authors[]"
-                    id="author-{{ author.id }}"
-                    value="{{ author.id }}"
-                    {{ author.id in selectedAuthorIds ? 'checked' : '' }}
-                />
-                <label class="form-check-label" for="author-{{ author.id }}">
-                    {{ author.name }}
-                </label>
+            <div class="mb-3">
+                <label class="form-label d-block"><b>Assuntos</b></label>
+                {% for item in subjects %}
+                    <div class="form-check">
+                        <input
+                            type="checkbox"
+                            class="form-check-input"
+                            name="subjects[]"
+                            id="subject-{{ item.id }}"
+                            value="{{ item.id }}"
+                            {{ item.id in selectedSubjectIds ? 'checked' : '' }}
+                        />
+                        <label class="form-check-label" for="subject-{{ item.id }}">
+                            {{ item.description }}
+                        </label>
+                    </div>
+                {% else %}
+                    <p class="text-muted small mb-0">Nenhum assunto cadastrado.</p>
+                {% endfor %}
             </div>
-        {% else %}
-            <p class="text-muted small mb-0">Nenhum autor cadastrado.</p>
-        {% endfor %}
+
+            <div class="mb-3">
+                <label class="form-label d-block" for="author-search"><b>Autores</b></label>
+                {% if authors is not empty %}
+                    <details class="authors-select" data-controller="authors-filter">
+                        <summary class="form-select">
+                            Selecionar autores
+                            <span class="badge text-bg-primary" data-authors-filter-target="count" hidden></span>
+                        </summary>
+                        <div class="authors-select-menu">
+                            <input
+                                id="author-search"
+                                type="search"
+                                class="form-control form-control-sm mb-2"
+                                placeholder="Buscar autor..."
+                                aria-label="Buscar autor"
+                                data-authors-filter-target="search"
+                                data-action="input->authors-filter#filter"
+                            >
+                            <div class="authors-select-options">
+                                {% for author in authors %}
+                                    <label class="form-check authors-select-option" data-authors-filter-target="option">
+                                        <input
+                                            type="checkbox"
+                                            class="form-check-input"
+                                            name="authors[]"
+                                            value="{{ author.id }}"
+                                            {{ author.id in selectedAuthorIds ? 'checked' : '' }}
+                                            data-authors-filter-target="checkbox"
+                                            data-action="change->authors-filter#updateCount"
+                                        />
+                                        <span class="form-check-label">{{ author.name }}</span>
+                                    </label>
+                                {% endfor %}
+                            </div>
+                            <p class="small text-muted mb-0" data-authors-filter-target="empty" hidden>
+                                Nenhum autor encontrado.
+                            </p>
+                        </div>
+                    </details>
+                {% else %}
+                    <p class="text-muted small mb-0">Nenhum autor cadastrado.</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="card-footer">
+            <custom-button type="submit">Filtrar</custom-button>
+            <custom-button href="{{ path('app_home') }}" variant="outline" class="mt-2">Limpar filtros</custom-button>
+        </div>
     </div>
-    <custom-button type="submit">Filtrar</custom-button>
-    <custom-button href="{{ path('app_home') }}" variant="outline" class="mt-2">Limpar filtros</custom-button>
 </form>
+
