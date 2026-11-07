@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Cache\InfraCache;
 use App\Entity\Author;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -11,33 +12,18 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class AuthorRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(
+        ManagerRegistry $registry,
+        private InfraCache $infraCache
+    )
     {
         parent::__construct($registry, Author::class);
     }
-
-//    /**
-//     * @return Autor[] Returns an array of Autor objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Autor
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    
+    public function cacheFindAll()
+    {
+        return $this->infraCache->cached('authors', [], function () {
+            return $this->findAll();
+        });
+    }
 }

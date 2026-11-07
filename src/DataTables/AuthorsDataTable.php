@@ -46,7 +46,7 @@ final class AuthorsDataTable extends AbstractDataTable
 
     public function configureDataTable(DataTable $table): DataTable
     {
-        $author = $this->authorRepository->findAll();
+        $author = $this->authorRepository->cacheFindAll();
         return $table
             ->data($author)
             ->pageLength(10)

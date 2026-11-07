@@ -47,7 +47,7 @@ final class SubjectsDataTable extends AbstractDataTable
 
     public function configureDataTable(DataTable $table): DataTable
     {
-        $subjects = $this->subjectRepository->findAll();
+        $subjects = $this->subjectRepository->cacheFindAll();
         return $table
             ->data($subjects)
             ->pageLength(10)

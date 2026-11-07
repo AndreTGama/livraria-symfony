@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Cache\InfraCache;
 use App\Entity\Subject;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -11,12 +12,14 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class SubjectRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(
+        ManagerRegistry $registry,
+        private InfraCache $infraCache    
+    )
     {
         parent::__construct($registry, Subject::class);
     }
 
-    
     public function findAllWithBookCount(): array
     {
         return $this->createQueryBuilder('s')
@@ -26,5 +29,12 @@ class SubjectRepository extends ServiceEntityRepository
             ->orderBy('s.description', 'ASC')
             ->getQuery()
             ->getArrayResult();
+    }
+
+    public function cacheFindAll()
+    {
+        return $this->infraCache->cached('subjects', [], function () {
+            return $this->findAll();
+        });
     }
 }

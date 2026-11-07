@@ -76,7 +76,7 @@ class BookRepository extends ServiceEntityRepository
 
     public function cacheFindAll()
     {
-        return $this->infraCache->cached('report', [], function () {
+        return $this->infraCache->cached('books', [], function () {
             return $this->findAll();
         });
     }
