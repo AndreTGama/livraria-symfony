@@ -53,18 +53,19 @@ Os scripts ficam na pasta `database/`na qual tem o `schema.sql` que tem somente 
 - *Uso de Redis*: o relatório e as listagens ficam em cache, no Redis o que acelera o carregamento, também está com listener do Doctrine desse modo, sempre que atualizar uma informação, o sistema irá limpar o cache, e mostrar os dados atualizados.
 
 ## Link de Apoio
-https://symfony.com/doc
-https://pentiminax.github.io/ux-datatables/
-https://github.com/pentiminax/ux-sweet-alert
-https://getbootstrap.com/docs/5.3/getting-started/introduction/
-https://docs.chocolatey.org/en-us/choco/setup/#install-from-powershell-v3
-https://hub.docker.com/
-https://www.w3schools.com
-https://copy-paste-css.com/
-https://www.css-buttons.com/
-https://datatables.net/
-https://mdbootstrap.com/docs/standard/data/tables/examples-and-customization/
-https://learn.getgrav.org/2/themes/twig-tags-filters-functions/filters
-https://fakerphp.org/
-https://notes.enovision.net/october-cms/passing-variables-from-twig-to-component
-https://tailwindflex.com/tag/header
+* https://symfony.com/doc
+* https://symfony.com/bundles/DoctrineFixturesBundle
+* https://pentiminax.github.io/ux-datatables/
+* https://github.com/pentiminax/ux-sweet-alert
+* https://getbootstrap.com/docs/5.3/getting-started/introduction/
+* https://docs.chocolatey.org/en-us/choco/setup/#install-from-powershell-v3
+* https://hub.docker.com/
+* https://www.w3schools.com
+* https://copy-paste-css.com/
+* https://www.css-buttons.com/
+* https://datatables.net/
+* https://mdbootstrap.com/docs/standard/data/tables/examples-and-customization/
+* https://learn.getgrav.org/2/themes/twig-tags-filters-functions/filters
+* https://fakerphp.org/
+* https://notes.enovision.net/october-cms/passing-variables-from-twig-to-component
+* https://tailwindflex.com/tag/header
