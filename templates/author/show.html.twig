@@ -1,38 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Autor{% endblock %}
+{% block title %}Autores | {{ author.name }}{% endblock %}
 
 {% block body %}
-    <h1>Autor</h1>
+    {% embed 'layout/_container.html.twig' with {title: 'Autores'} %}
+        {% block content %}
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ author.id }}</td>
-            </tr>
-            <tr>
-                <th>Nome</th>
-                <td>{{ author.name }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ author.createdAt ? author.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ author.updatedAt ? author.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>DeletedAt</th>
-                <td>{{ author.deletedAt ? author.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ author.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nome</th>
+                        <td>{{ author.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>CreatedAt</th>
+                        <td>{{ author.createdAt ? author.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>UpdatedAt</th>
+                        <td>{{ author.updatedAt ? author.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>DeletedAt</th>
+                        <td>{{ author.deletedAt ? author.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <custom-button href="{{ path('app_author_edit', {'id': author.id}) }}">Editar</custom-button>
+            <custom-button href="{{ path('app_author_index') }}" variant="outline">Voltar</custom-button>
+            {{ include('author/_delete_form.html.twig') }}
+        {% endblock %}
 
-    <a href="{{ path('app_author_index') }}">back to list</a>
+    {% endembed %}
 
-    <a href="{{ path('app_author_edit', {'id': author.id}) }}">edit</a>
-
-    {{ include('author/_delete_form.html.twig') }}
 {% endblock %}
