@@ -55,7 +55,7 @@ final class BooksDataTable extends AbstractDataTable
 
     public function configureDataTable(DataTable $table): DataTable
     {
-        $books = $this->bookRepository->findAll();
+        $books = $this->bookRepository->cacheFindAll();
         return $table
             ->data($books)
             ->pageLength(10)

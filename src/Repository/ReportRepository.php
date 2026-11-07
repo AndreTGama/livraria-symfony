@@ -2,18 +2,17 @@
 
 namespace App\Repository;
 
+use App\Cache\InfraCache;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\ParameterType;
 use Symfony\Component\String\UnicodeString;
-use Symfony\Contracts\Cache\ItemInterface;
-use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
 final class ReportRepository
 {
     public function __construct(
         private Connection $connection,
-        private TagAwareCacheInterface $reportCache
+        private InfraCache $infraCache
     ) {}
 
     /**
@@ -27,7 +26,7 @@ final class ReportRepository
         sort($subjectIds);
         sort($authorIds);
 
-        return $this->cached(
+        return $this->infraCache->cached(
             'report',
             [
                 $subjectIds,
@@ -81,7 +80,7 @@ final class ReportRepository
         sort($subjectIds);
         sort($authorIds);
 
-        return $this->cached('report_export', [$subjectIds, $authorIds, $search], function () use ($subjectIds, $authorIds, $search) {
+        return $this->infraCache->cached('report_export', [$subjectIds, $authorIds, $search], function () use ($subjectIds, $authorIds, $search) {
             [$where, $parameters, $types] = $this->buildFilters($subjectIds, $authorIds, $search);
             $whereSql = $where === [] ? '' : ' WHERE ' . implode(' AND ', $where);
 
@@ -146,23 +145,4 @@ final class ReportRepository
         return $reports;
     }
 
-
-    /**
-     * cached
-     *
-     * @param string $prefix
-     * @param array $key
-     * @param callable $callback
-     * @return mixed
-     */
-    private function cached(string $prefix, array $key, callable $callback): mixed
-    {
-        $cacheKey = $prefix . '_' . md5(serialize($key));
-
-        return $this->reportCache->get($cacheKey, function (ItemInterface $item,) use ($callback) {
-            $item->tag(['report']);
-
-            return $callback();
-        });
-    }
 }

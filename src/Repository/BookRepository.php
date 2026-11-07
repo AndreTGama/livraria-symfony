@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Cache\InfraCache;
 use App\Entity\Book;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -13,7 +14,10 @@ use Symfony\Component\String\UnicodeString;
  */
 class BookRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(
+        ManagerRegistry $registry,
+        private InfraCache $infraCache
+    )
     {
         parent::__construct($registry, Book::class);
     }
@@ -68,5 +72,12 @@ class BookRepository extends ServiceEntityRepository
             'page' => $page,
             'totalPages' => $totalPages,
         ];
+    }
+
+    public function cacheFindAll()
+    {
+        return $this->infraCache->cached('report', [], function () {
+            return $this->findAll();
+        });
     }
 }
