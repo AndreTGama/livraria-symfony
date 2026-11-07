@@ -47,7 +47,7 @@ final class BooksDataTable extends AbstractDataTable
             )
             ->add(
                 Action::detail('Visualizar')
-                    ->setClassName('btn btn-sm btn-info')
+                    ->setClassName('button-custom')
                     ->icon(Icon::Eye)
                     ->linkToRoute('app_book_show', fn(Book $book): array => ['id' => $book->getId()])
             );

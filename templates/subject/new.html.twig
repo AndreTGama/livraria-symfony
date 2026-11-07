@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Assunto{% endblock %}
+{% block title %}Assuntos | Novo{% endblock %}
 
 {% block body %}
-    <h1>Create new Assunto</h1>
-
-    {{ include('subject/_form.html.twig') }}
-
-    <a href="{{ path('app_subject_index') }}">back to list</a>
+    {% embed 'layout/_container.html.twig' with {title: 'Autores'} %}
+        {% block content %}
+            {{ include('subject/_form.html.twig', {back_href: path('app_author_index')}) }}
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

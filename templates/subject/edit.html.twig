@@ -1,13 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Assunto{% endblock %}
+{% block title %}Assuntos | Editar{% endblock %}
 
 {% block body %}
-    <h1>Edit Assunto</h1>
-
-    {{ include('subject/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_subject_index') }}">back to list</a>
-
-    {{ include('subject/_delete_form.html.twig') }}
+    {% embed 'layout/_container.html.twig' with {title: 'Assunto'} %}
+        {% block content %}
+            {{ include('subject/_form.html.twig', {'button_label': 'Atualizar', back_href: path('app_subject_index')}) }}
+            {{ include('subject/_delete_form.html.twig') }}
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

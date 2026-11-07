@@ -63,6 +63,7 @@ final class SubjectController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+            $this->addFlash('success', 'Assunto atualizado com sucesso');
 
             return $this->redirectToRoute('app_subject_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -76,15 +77,21 @@ final class SubjectController extends AbstractController
     #[Route('/{id}', name: 'app_subject_delete', methods: ['POST'])]
     public function delete(Request $request, Subject $subject): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $subject->getId(), $request->getPayload()->getString('_token'))) {
-            try {
-                $this->subjectService->delete($subject);
-                $this->addFlash('success', 'Assunto excluído com sucesso');
-            } catch (AssociatedSubjectException $e) {
-                $this->addFlash('warning', $e->getMessage());
-            }
-        }
+        $form = $this->createForm(SubjectType::class, $subject);
+        $form->handleRequest($request);
+        try {
+            $this->subjectService->delete($subject);
+            $this->addFlash('success', 'Assunto excluído com sucesso');
 
-        return $this->redirectToRoute('app_subject_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_subject_index', [], Response::HTTP_SEE_OTHER);
+        } catch (AssociatedSubjectException $exception) {
+            $this->addFlash('danger', $exception->getMessage());
+
+            return $this->redirectToRoute(
+                'app_subject_edit',
+                ['id' => $subject->getId()],
+                Response::HTTP_SEE_OTHER
+            );
+        }
     }
 }

@@ -67,6 +67,7 @@ final class AuthorController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash('success', 'Autor atualizado com sucesso');
             return $this->redirectToRoute('app_author_index', [], Response::HTTP_SEE_OTHER);
         }
 

@@ -3,8 +3,8 @@
     action="{{ path('app_subject_delete', {'id': subject.id}) }}"
     data-controller="confirm"
     data-action="submit->confirm#submit"
-    data-confirm-message-value="Deseja excluir o autor {{ author.name }}?"
+    data-confirm-message-value="Deseja excluir o assunto {{ subject.description }}?"
 >
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ subject.id) }}">
-    <button class="btn">Delete</button>
+    <custom-button type="submit" class="mt-2" variant="outline">Delete</custom-button>
 </form>

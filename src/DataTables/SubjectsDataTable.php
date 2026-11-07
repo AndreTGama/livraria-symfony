@@ -39,7 +39,7 @@ final class SubjectsDataTable extends AbstractDataTable
             )
             ->add(
                 Action::detail('Visualizar')
-                    ->setClassName('btn btn-sm btn-info')
+                    ->setClassName('button-custom')
                     ->icon(Icon::Eye)
                     ->linkToRoute('app_subject_show', fn(Subject $subject): array => ['id' => $subject->getId()])
             );
