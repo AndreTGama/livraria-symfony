@@ -3,10 +3,10 @@
 setup:
 	docker compose up -d --build
 	docker compose exec php composer install
-	docker compose exec php chown -R www-data:www-data var
 	docker compose exec php php bin/console doctrine:migrations:migrate -n
 	docker compose exec php php bin/console doctrine:fixtures:load -n
 	docker compose exec php php bin/console cache:warmup
+	docker compose restart php
 
 up:
 	docker compose up -d

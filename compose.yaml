@@ -37,7 +37,10 @@ services:
 
 ### PHP ###
   php:
-    build: .
+    build:
+      context: .
+      dockerfile: dockerfile
+    command: ["sh", "-c", "chown -R www-data:www-data /var/www/html/var && exec php-fpm"]
     volumes:
       - ./:/var/www/html
       - var_data:/var/www/html/var

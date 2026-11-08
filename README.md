@@ -33,10 +33,13 @@ Esse comando, irá iniciar os containers do docker, instalar as dependências, r
 ```
 docker compose up -d --build
 docker compose exec php composer install
-docker compose exec php chown -R www-data:www-data var
 docker compose exec php php bin/console doctrine:migrations:migrate -n
 docker compose exec php php bin/console doctrine:fixtures:load -n
+docker compose exec php php bin/console cache:warmup
+docker compose restart php
 ```
+
+Ao iniciar o serviço `php`, o Docker ajusta automaticamente as permissões do volume `var` para `www-data`. O restart ao final reaplica as permissões nos arquivos de cache gerados pelos comandos de configuração.
 
 ### Testes
 ```
