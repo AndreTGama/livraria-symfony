@@ -6,7 +6,6 @@ use App\Cache\InfraCache;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\ParameterType;
-use Symfony\Component\String\UnicodeString;
 
 final class ReportRepository
 {
@@ -27,7 +26,7 @@ final class ReportRepository
         sort($authorIds);
 
         return $this->infraCache->cached(
-            'report',
+            'report_fulltext',
             [
                 $subjectIds,
                 $authorIds,
@@ -80,7 +79,7 @@ final class ReportRepository
         sort($subjectIds);
         sort($authorIds);
 
-        return $this->infraCache->cached('report_export', [$subjectIds, $authorIds, $search], function () use ($subjectIds, $authorIds, $search) {
+        return $this->infraCache->cached('report_export_fulltext', [$subjectIds, $authorIds, $search], function () use ($subjectIds, $authorIds, $search) {
             [$where, $parameters, $types] = $this->buildFilters($subjectIds, $authorIds, $search);
             $whereSql = $where === [] ? '' : ' WHERE ' . implode(' AND ', $where);
 
@@ -123,8 +122,33 @@ final class ReportRepository
         }
 
         if ($search !== null && $search !== '') {
-            $where[] = '(LOWER(r.titulo) LIKE :search OR LOWER(r.editora) LIKE :search)';
-            $parameters['search'] = '%' . (new UnicodeString($search))->lower()->toString() . '%';
+            $searchPrefix = trim($search) . '*';
+            $where[] = '(
+                EXISTS (
+                    SELECT 1
+                    FROM Livro l
+                    WHERE l.CodL = r.livro_codigo
+                        AND MATCH(l.Titulo, l.Editora) AGAINST (:search_book IN BOOLEAN MODE)
+                )
+                OR EXISTS (
+                    SELECT 1
+                    FROM Autor a
+                    WHERE a.CodAu = r.autor_codigo
+                        AND MATCH(a.Nome) AGAINST (:search_author IN BOOLEAN MODE)
+                )
+                OR EXISTS (
+                    SELECT 1
+                    FROM Livro_Assunto ls
+                    INNER JOIN Assunto s ON s.CodAs = ls.Assunto_CodAs
+                    WHERE ls.Livro_CodL = r.livro_codigo
+                        AND s.DeletedAt IS NULL
+                        AND MATCH(s.Descricao) AGAINST (:search_subject IN BOOLEAN MODE)
+                )
+            )';
+
+            $parameters['search_book'] = $searchPrefix;
+            $parameters['search_author'] = $searchPrefix;
+            $parameters['search_subject'] = $searchPrefix;
         }
 
         return [$where, $parameters, $types];
