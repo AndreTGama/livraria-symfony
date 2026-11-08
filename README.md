@@ -1,6 +1,6 @@
 # CRUD Livraria em Symfony
 
-Esse projeto tem como finalidade um CURD de 3 entidades:livros, autores e assuntos, com a capacidade de gerar relatórios.
+Sistema de gerenciamento de livraria desenvolvido para permitir o cadastro, a edição e o gerenciamento de livros, autores e assuntos. O cadastro de livros exige a vinculação de ao menos um autor e um gênero(assunto). Para assegurar a confiabilidade e a persistência do histórico de dados, o projeto implementa soft delete nas operações de remoção.
 
 ## Tecnologias
 * Symfony
