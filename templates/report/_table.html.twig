@@ -3,6 +3,7 @@
         <tr>
             <th>Título</th>
             <th>Editora</th>
+            <th>Assuntos</th>
             <th>Ano</th>
             <th>Valor</th>
         </tr>
@@ -10,12 +11,13 @@
     <tbody>
         {% for authorId, books in reports %}
             <tr class="table-secondary">
-                <th colspan="4">{{ (books|first).autor_nome }}</th>
+                <th colspan="5">{{ (books|first).autor_nome }}</th>
             </tr>
             {% for book in books %}
                 <tr>
                     <td>{{ book.titulo }}</td>
                     <td>{{ book.editora }}</td>
+                    <td>{{ book.assuntos ?: '—' }}</td>
                     <td>{{ book.ano_publicacao }}</td>
                     <td>{{ book.valor|format_currency('BRL', locale: 'pt') }}</td>
                 </tr>

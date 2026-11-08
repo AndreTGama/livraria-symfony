@@ -58,6 +58,7 @@ Os scripts ficam na pasta `database/`na qual tem o `schema.sql` que tem somente 
 ## Link de Apoio
 * https://symfony.com/doc
 * https://symfony.com/bundles/DoctrineFixturesBundle
+* https://symfony.com/blog/new-in-symfony-7-4-request-class-improvements
 * https://pentiminax.github.io/ux-datatables/
 * https://github.com/pentiminax/ux-sweet-alert
 * https://getbootstrap.com/docs/5.3/getting-started/introduction/
@@ -72,3 +73,4 @@ Os scripts ficam na pasta `database/`na qual tem o `schema.sql` que tem somente 
 * https://fakerphp.org/
 * https://notes.enovision.net/october-cms/passing-variables-from-twig-to-component
 * https://tailwindflex.com/tag/header
+* https://www.youtube.com/watch?v=UYOr-rpQs1I&t=4s
