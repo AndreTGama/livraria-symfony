@@ -11,6 +11,17 @@ body {
   font-family: system-ui, -apple-system, sans-serif;
 }
 
+.nav-a:hover {
+  color: var(--purple-color) !important;
+  font-weight: 600 !important;
+}
+
+.active-custom {
+  color: var(--purple-color) !important;
+  font-weight: 600 !important;
+  text-decoration: underline !important;
+}
+
 .custom-container {
   padding: 35px;
 }

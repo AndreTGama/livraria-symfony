@@ -1,4 +1,5 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    {% set current_route = app.request.attributes.get('_route') %}
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
             <img src="{{ asset('images/logo.webp') }}" alt="" width="60" height="60">
@@ -11,19 +12,19 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{ path('app_home') }}">Home</a>
+                    <a class="nav-link nav-a {{ current_route == 'app_home' ? 'active-custom' }}" {{ current_route == 'app_home' ? 'aria-current="page"' }} href="{{ path('app_home') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_book_index') }}">Livros</a>
+                    <a class="nav-link nav-a {{ current_route starts with 'app_book_' ? 'active-custom' }}" {{ current_route starts with 'app_book_' ? 'aria-current="page"' }} href="{{ path('app_book_index') }}">Livros</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_author_index') }}">Autores</a>
+                    <a class="nav-link nav-a {{ current_route starts with 'app_author_' ? 'active-custom' }}" {{ current_route starts with 'app_author_' ? 'aria-current="page"' }} href="{{ path('app_author_index') }}">Autores</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_subject_index') }}">Assuntos</a>
+                    <a class="nav-link nav-a {{ current_route starts with 'app_subject_' ? 'active-custom' }}" {{ current_route starts with 'app_subject_' ? 'aria-current="page"' }} href="{{ path('app_subject_index') }}">Assuntos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_report_index') }}">Relatório</a>
+                    <a class="nav-link nav-a {{ current_route starts with 'app_report_' ? 'active-custom' }}" {{ current_route starts with 'app_report_' ? 'aria-current="page"' }} href="{{ path('app_report_index') }}">Relatório</a>
                 </li>
             </ul>
         </div>
